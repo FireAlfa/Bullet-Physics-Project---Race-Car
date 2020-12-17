@@ -24,6 +24,8 @@ Application::Application()
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(player);
+
+	// Camera
 	AddModule(camera);
 
 	// Renderer last!
