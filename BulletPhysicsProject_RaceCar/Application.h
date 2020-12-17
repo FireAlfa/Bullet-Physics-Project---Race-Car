@@ -33,6 +33,10 @@ private:
 
 public:
 
+	bool debug = false;
+
+public:
+
 	Application();
 	~Application();
 

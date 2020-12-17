@@ -28,6 +28,11 @@ Application::Application()
 
 	// Renderer last!
 	AddModule(renderer3D);
+
+
+
+
+	bool debug = false;
 }
 
 Application::~Application()
