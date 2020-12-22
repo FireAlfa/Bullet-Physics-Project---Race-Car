@@ -44,13 +44,22 @@ void PhysVehicle3D::Render()
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
 	offset = offset.rotate(q.getAxis(), q.getAngle());
-
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
 	chassis.transform.M[14] += offset.getZ();
 
+	Cube bridge(info.bridge_size.x, info.bridge_size.y, info.bridge_size.z);
+	bridge.color = Red;
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&bridge.transform);
+	btVector3 b_offset(info.bridge_offset.x, info.bridge_offset.y, info.bridge_offset.z);
+	b_offset = b_offset.rotate(q.getAxis(), q.getAngle());
+	bridge.transform.M[12] += b_offset.getX();
+	bridge.transform.M[13] += b_offset.getY();
+	bridge.transform.M[14] += b_offset.getZ();
+
 
 	chassis.Render();
+	bridge.Render();
 }
 
 // ----------------------------------------------------------------------------

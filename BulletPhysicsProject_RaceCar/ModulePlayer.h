@@ -6,7 +6,7 @@
 struct PhysVehicle3D;
 
 #define MAX_ACCELERATION 500.0f
-#define TURN_DEGREES 15.0f * DEGTORAD
+#define TURN_DEGREES 25.0f * DEGTORAD
 #define BRAKE_POWER 40.0f
 
 class ModulePlayer : public Module
@@ -19,10 +19,20 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	enum Gear
+	{
+		PARK = 0,
+		DRIVE,
+		REVERSE
+	};
+
 public:
 
+	Gear gearState = PARK;
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
+
+	uint gearFx;
 };
