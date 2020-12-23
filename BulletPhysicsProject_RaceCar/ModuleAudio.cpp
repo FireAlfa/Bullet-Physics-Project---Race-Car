@@ -154,3 +154,20 @@ bool ModuleAudio::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+// Pause WAV
+bool ModuleAudio::PauseFx()
+{
+
+	Mix_Pause(-1);
+
+	return true;
+}
+
+// Resume WAV
+bool ModuleAudio::ResumeFx()
+{
+	Mix_Resume(-1);
+
+	return true;
+}

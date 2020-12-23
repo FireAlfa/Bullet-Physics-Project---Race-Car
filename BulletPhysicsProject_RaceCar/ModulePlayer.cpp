@@ -19,6 +19,8 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	gearFx = App->audio->LoadFx("Assets/FX/gear_shift.wav");
+	engineFx = App->audio->LoadFx("Assets/FX/truck_engine.wav");
+	App->audio->PlayFx(engineFx, -1);
 
 	VehicleInfo car;
 
@@ -119,63 +121,79 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
-
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (engine == true)
 	{
-		switch (gearState)
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
-		case ModulePlayer::PARK:
-			break;
-		case ModulePlayer::DRIVE:
-			if (vehicle->GetKmh() < 90)
+			switch (gearState)
 			{
-				acceleration = MAX_ACCELERATION;
+			case ModulePlayer::PARKING:
+				break;
+			case ModulePlayer::DRIVE:
+				if (vehicle->GetKmh() < 90)
+				{
+					acceleration = MAX_ACCELERATION;
+				}
+				break;
+			case ModulePlayer::REVERSE:
+				if (vehicle->GetKmh() > -20)
+				{
+					acceleration = -MAX_ACCELERATION;
+				}
+				break;
+			default:
+				break;
 			}
-			break;
-		case ModulePlayer::REVERSE:
-			if (vehicle->GetKmh() > -20)
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			brake = BRAKE_POWER;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			if (turn < TURN_DEGREES)
+				turn += TURN_DEGREES;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			if (turn > -TURN_DEGREES)
+				turn -= TURN_DEGREES;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+		{
+			App->audio->PlayFx(gearFx);
+			switch (gearState)
 			{
-				acceleration = -MAX_ACCELERATION;
+			case ModulePlayer::PARKING:
+				gearState = DRIVE;
+				break;
+			case ModulePlayer::DRIVE:
+				gearState = REVERSE;
+				break;
+			case ModulePlayer::REVERSE:
+				gearState = PARKING;
+				break;
+			default:
+				break;
 			}
-			break;
-		default:
-			break;
 		}
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
-		brake = BRAKE_POWER;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-	{
-		App->audio->PlayFx(gearFx);
-		switch (gearState)
+		if (Mix_Paused(-1))
 		{
-		case ModulePlayer::PARK:
-			gearState = DRIVE;
-			break;
-		case ModulePlayer::DRIVE:
-			gearState = REVERSE;
-			break;
-		case ModulePlayer::REVERSE:
-			gearState = PARK;
-			break;
-		default:
-			break;
+			App->audio->ResumeFx();
+			engine = true;
+		}
+		else
+		{
+			App->audio->PauseFx();
+			engine = false;
 		}
 	}
 
@@ -186,7 +204,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	char title[80];
-	sprintf_s(title, "%.1f Km/h, Gear: %d", vehicle->GetKmh(), gearState);
+	sprintf_s(title, "%.1f Km/h, Gear: %d, Engine: %d", vehicle->GetKmh(), gearState, engine);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;

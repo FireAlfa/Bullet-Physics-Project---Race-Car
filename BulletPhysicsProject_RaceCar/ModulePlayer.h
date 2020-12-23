@@ -21,18 +21,20 @@ public:
 
 	enum Gear
 	{
-		PARK = 0,
+		PARKING = 0,
 		DRIVE,
 		REVERSE
 	};
 
 public:
 
-	Gear gearState = PARK;
+	Gear gearState = PARKING;
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
+	bool engine = true;
 
 	uint gearFx;
+	uint engineFx;
 };
