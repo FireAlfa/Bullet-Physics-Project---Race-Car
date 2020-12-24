@@ -18,8 +18,17 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
+	//Load all engine sound effects
 	gearFx = App->audio->LoadFx("Assets/FX/gear_shift.wav");
 	engineFx = App->audio->LoadFx("Assets/FX/truck_engine.wav");
+	engineOnFx = App->audio->LoadFx("Assets/FX/truck_on.wav");
+	engineOffFx = App->audio->LoadFx("Assets/FX/truck_off.wav");
+	engineAccelerationFx = App->audio->LoadFx("Assets/FX/truck_acceleration.wav");
+	engineMaxSpeedFx = App->audio->LoadFx("Assets/FX/truck_max_speed.wav");
+	engineStopFx = App->audio->LoadFx("Assets/FX/truck_stop.wav");
+
+	//Play stop engine sound
+	App->audio->PlayFx(engineOnFx);
 	App->audio->PlayFx(engineFx, -1);
 
 	VehicleInfo car;
@@ -130,6 +139,7 @@ update_status ModulePlayer::Update(float dt)
 			case ModulePlayer::PARKING:
 				break;
 			case ModulePlayer::DRIVE:
+				App->audio->PlayFx(engineAccelerationFx);
 				if (vehicle->GetKmh() < 90)
 				{
 					acceleration = MAX_ACCELERATION;
@@ -144,6 +154,10 @@ update_status ModulePlayer::Update(float dt)
 			default:
 				break;
 			}
+		}
+		else
+		{
+			//App->audio->PlayFx(engineStopFx);
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
@@ -185,14 +199,16 @@ update_status ModulePlayer::Update(float dt)
 	
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
-		if (Mix_Paused(-1))
+		if (engine != true)
 		{
+			App->audio->PlayFx(engineOnFx);
 			App->audio->ResumeFx();
 			engine = true;
 		}
 		else
 		{
 			App->audio->PauseFx();
+			App->audio->PlayFx(engineOffFx);
 			engine = false;
 		}
 	}
