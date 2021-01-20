@@ -30,6 +30,7 @@ public:
 
 	Gear gearState = PARKING;
 	PhysVehicle3D* vehicle;
+	PhysVehicle3D* remolque;
 	float turn;
 	float acceleration;
 	float brake;
