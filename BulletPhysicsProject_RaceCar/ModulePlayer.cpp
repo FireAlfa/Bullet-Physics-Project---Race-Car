@@ -4,6 +4,7 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
+#include "ModuleSceneIntro.h"
 #include "Bullet/include/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
@@ -32,85 +33,6 @@ bool ModulePlayer::Start()
 	App->audio->PlayFx(engineOnFx);
 	App->audio->PlayFx(engineFx, -1);
 
-	VehicleInfo remolqueInfo;
-
-	// Remolque properties ---------------------------------------
-	remolqueInfo.chassis_size.Set(2.5f, 3, 9.f);
-	remolqueInfo.chassis_offset.Set(0, 0, 0);
-
-	remolqueInfo.mass = 100.0f;
-	remolqueInfo.suspensionStiffness = 15.88f;
-	remolqueInfo.suspensionCompression = 0.83f;
-	remolqueInfo.suspensionDamping = 0.88f;
-	remolqueInfo.maxSuspensionTravelCm = 1000.0f;
-	remolqueInfo.frictionSlip = 50.5;
-	remolqueInfo.maxSuspensionForce = 6000.0f;
-
-	// Wheel properties ---------------------------------------
-	float connection_height = 1.2f;
-	float wheel_radius = 0.6f;
-	float wheel_width = 0.5f;
-	float suspensionRestLength = 1.2f;
-	vec3 direction(0, -1, 0);
-	vec3 axis(-1, 0, 0);
-
-	float half_width_remo = remolqueInfo.chassis_size.x * 0.5f;
-	float half_length_remo = remolqueInfo.chassis_size.z * 0.5f;
-
-	remolqueInfo.num_wheels = 4;
-	remolqueInfo.wheels = new Wheel[4];
-
-	// FRONT-LEFT ------------------------
-	remolqueInfo.wheels[0].connection.Set(half_width_remo - 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius + 1.5);
-	remolqueInfo.wheels[0].direction = direction;
-	remolqueInfo.wheels[0].axis = axis;
-	remolqueInfo.wheels[0].suspensionRestLength = suspensionRestLength;
-	remolqueInfo.wheels[0].radius = wheel_radius;
-	remolqueInfo.wheels[0].width = wheel_width;
-	remolqueInfo.wheels[0].front = false;
-	remolqueInfo.wheels[0].drive = false;
-	remolqueInfo.wheels[0].brake = false;
-	remolqueInfo.wheels[0].steering = false;
-
-	// FRONT-RIGHT ------------------------
-	remolqueInfo.wheels[1].connection.Set(-half_width_remo + 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius + 1.5);
-	remolqueInfo.wheels[1].direction = direction;
-	remolqueInfo.wheels[1].axis = axis;
-	remolqueInfo.wheels[1].suspensionRestLength = suspensionRestLength;
-	remolqueInfo.wheels[1].radius = wheel_radius;
-	remolqueInfo.wheels[1].width = wheel_width;
-	remolqueInfo.wheels[1].front = false;
-	remolqueInfo.wheels[1].drive = false;
-	remolqueInfo.wheels[1].brake = false;
-	remolqueInfo.wheels[1].steering = false;
-
-	// REAR-LEFT ------------------------
-	remolqueInfo.wheels[2].connection.Set(half_width_remo - 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius);
-	remolqueInfo.wheels[2].direction = direction;
-	remolqueInfo.wheels[2].axis = axis;
-	remolqueInfo.wheels[2].suspensionRestLength = suspensionRestLength;
-	remolqueInfo.wheels[2].radius = wheel_radius;
-	remolqueInfo.wheels[2].width = wheel_width;
-	remolqueInfo.wheels[2].front = false;
-	remolqueInfo.wheels[2].drive = false;
-	remolqueInfo.wheels[2].brake = false;
-	remolqueInfo.wheels[2].steering = false;
-
-	// REAR-RIGHT ------------------------
-	remolqueInfo.wheels[3].connection.Set(-half_width_remo + 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius);
-	remolqueInfo.wheels[3].direction = direction;
-	remolqueInfo.wheels[3].axis = axis;
-	remolqueInfo.wheels[3].suspensionRestLength = suspensionRestLength;
-	remolqueInfo.wheels[3].radius = wheel_radius;
-	remolqueInfo.wheels[3].width = wheel_width;
-	remolqueInfo.wheels[3].front = false;
-	remolqueInfo.wheels[3].drive = false;
-	remolqueInfo.wheels[3].brake = false;
-	remolqueInfo.wheels[3].steering = false;
-
-	remolque = App->physics->AddVehicle(remolqueInfo);
-	remolque->SetPos(0.0f, 1.5f, 5.0f);
-
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
@@ -128,6 +50,13 @@ bool ModulePlayer::Start()
 	car.maxSuspensionForce = 6000.0f;
 
 	// Don't change anything below this line ------------------
+	// Wheel properties ---------------------------------------
+	float connection_height = 1.2f;
+	float wheel_radius = 0.6f;
+	float wheel_width = 0.5f;
+	float suspensionRestLength = 1.2f;
+	vec3 direction(0, -1, 0);
+	vec3 axis(-1, 0, 0);
 
 	float half_width = car.chassis_size.x*0.5f;
 	float half_length = car.chassis_size.z*0.5f;
@@ -185,19 +114,9 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0.0f, 1.5f, 14.0f);
+	vehicle->collision_listeners.add(this);
+	vehicle->GetBody()->setUserPointer(vehicle);
 
-	//btVector3 anchor = { vehicle->info.bridge_offset.x, vehicle->info.bridge_offset.y, vehicle->info.bridge_offset.z };
-
-	btTransform frameInA, frameInB;
-	frameInA = btTransform::getIdentity();
-	frameInA.setOrigin(btVector3(btScalar(vehicle->info.bridge_offset.x), btScalar(vehicle->info.bridge_offset.y + 1), btScalar(vehicle->info.bridge_offset.z - 1.5)));
-	frameInB = btTransform::getIdentity();
-	frameInB.setOrigin(btVector3(btScalar(remolque->info.chassis_offset.x), btScalar(remolque->info.chassis_offset.y), btScalar(remolque->info.chassis_offset.z + 2)));
-	
-	btGeneric6DofConstraint* cs = new btGeneric6DofConstraint(*vehicle->GetBody(),*remolque->GetBody(), frameInA, frameInB, false);
-
-	cs->setDbgDrawSize(2.0f);
-	App->physics->world->addConstraint(cs);
 	
 	return true;
 }
@@ -208,6 +127,11 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading player");
 
 	return true;
+}
+
+void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+
 }
 
 // Update: draw background
@@ -302,7 +226,6 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Brake(brake);
 
 	vehicle->Render();
-	remolque->Render();
 
 	char title[80];
 	if (engine == true)

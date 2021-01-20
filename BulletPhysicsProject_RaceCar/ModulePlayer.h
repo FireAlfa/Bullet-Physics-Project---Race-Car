@@ -19,6 +19,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+
 	enum Gear
 	{
 		PARKING = 0,
@@ -30,7 +32,6 @@ public:
 
 	Gear gearState = PARKING;
 	PhysVehicle3D* vehicle;
-	PhysVehicle3D* remolque;
 	float turn;
 	float acceleration;
 	float brake;
