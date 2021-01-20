@@ -4,6 +4,7 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
+#include "Bullet/include/BulletDynamics/ConstraintSolver/btConeTwistConstraint.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
@@ -184,6 +185,11 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0.0f, 1.5f, 0.0f);
+
+
+	//btConeTwistConstraint* cs = btConeTwistConstraint(vehicle->GetBody(), remolque->GetBody(), );
+
+
 	
 	return true;
 }
