@@ -4,7 +4,7 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
-#include "Bullet/include/BulletDynamics/ConstraintSolver/btConeTwistConstraint.h"
+#include "Bullet/include/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
@@ -184,12 +184,20 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0.0f, 1.5f, 0.0f);
+	vehicle->SetPos(0.0f, 1.5f, 14.0f);
 
+	//btVector3 anchor = { vehicle->info.bridge_offset.x, vehicle->info.bridge_offset.y, vehicle->info.bridge_offset.z };
 
-	//btConeTwistConstraint* cs = btConeTwistConstraint(vehicle->GetBody(), remolque->GetBody(), );
+	btTransform frameInA, frameInB;
+	frameInA = btTransform::getIdentity();
+	frameInA.setOrigin(btVector3(btScalar(vehicle->info.bridge_offset.x), btScalar(vehicle->info.bridge_offset.y + 1), btScalar(vehicle->info.bridge_offset.z - 1.5)));
+	frameInB = btTransform::getIdentity();
+	frameInB.setOrigin(btVector3(btScalar(remolque->info.chassis_offset.x), btScalar(remolque->info.chassis_offset.y), btScalar(remolque->info.chassis_offset.z + 2)));
+	
+	btGeneric6DofConstraint* cs = new btGeneric6DofConstraint(*vehicle->GetBody(),*remolque->GetBody(), frameInA, frameInB, false);
 
-
+	cs->setDbgDrawSize(2.0f);
+	App->physics->world->addConstraint(cs);
 	
 	return true;
 }

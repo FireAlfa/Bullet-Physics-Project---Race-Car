@@ -51,6 +51,7 @@ void PhysVehicle3D::Render()
 	Cube bridge(info.bridge_size.x, info.bridge_size.y, info.bridge_size.z);
 	bridge.color = Red;
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&bridge.transform);
+	q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 b_offset(info.bridge_offset.x, info.bridge_offset.y, info.bridge_offset.z);
 	b_offset = b_offset.rotate(q.getAxis(), q.getAngle());
 	bridge.transform.M[12] += b_offset.getX();
