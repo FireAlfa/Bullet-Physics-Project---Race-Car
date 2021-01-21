@@ -5,7 +5,6 @@
 #include "PhysVehicle3D.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
-#include "Bullet/include/BulletCollision/CollisionShapes/btCompoundShape.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -99,11 +98,10 @@ bool ModuleSceneIntro::Start()
 	remolqueInfo.wheels[3].brake = false;
 	remolqueInfo.wheels[3].steering = false;
 
-	remolque = App->physics->AddTrailer(remolqueInfo);
+	remolque = App->physics->AddVehicle(remolqueInfo);
 	remolque->SetPos(0.0f, 1.5f, 5.0f);
 	remolque->collision_listeners.add(this);
 	remolque->GetBody()->setUserPointer(remolque);
-
 
 	return ret;
 }
@@ -136,7 +134,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1 == remolque || body2 == remolque)
+	if ((body1 == remolque || body2 == remolque)
 	{
 		btTransform frameInA, frameInB;
 		frameInA = btTransform::getIdentity();
