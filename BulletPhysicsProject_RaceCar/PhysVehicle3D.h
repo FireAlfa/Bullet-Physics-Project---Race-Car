@@ -1,7 +1,6 @@
 #pragma once
 
 #include "PhysBody3D.h"
-#include "Bullet/include/LinearMath/btVector3.h"
 #include "glmath.h"
 
 class btRaycastVehicle;
@@ -40,21 +39,6 @@ struct VehicleInfo
 
 	Wheel* wheels;
 	int num_wheels;
-};
-
-struct TrailerInfo
-{
-	~TrailerInfo();
-
-	struct VehicleInfo vehicleInfo;
-
-	btVector3 origin;
-
-	btVector3 box1;
-	btVector3 box2;
-	btVector3 box3;
-	btVector3 box4;
-	btVector3 box5;
 };
 
 
