@@ -26,7 +26,7 @@ bool ModuleSceneIntro::Start()
 	TrailerInfo trailerInfo;
 
 	// Vehicle properties ---------------------------------------
-	trailerInfo.vehicleInfo.chassis_size.Set(2.0f, 0.1f, 6.0f);
+	trailerInfo.vehicleInfo.chassis_size.Set(2.5f, 3, 9.f);
 	trailerInfo.vehicleInfo.chassis_offset.Set(0, 0, 0);
 
 	trailerInfo.vehicleInfo.mass = 100.0f;
@@ -37,12 +37,12 @@ bool ModuleSceneIntro::Start()
 	trailerInfo.vehicleInfo.frictionSlip = 50.5;
 	trailerInfo.vehicleInfo.maxSuspensionForce = 6000.0f;
 
-	trailerInfo.vehicleInfo.box1 = { 2.0f, 0.1f, 6.0f };
-	trailerInfo.vehicleInfo.box2 = { 0.1f, 1.9f, 6.0f };
-	trailerInfo.vehicleInfo.box3 = { 0.1f, 1.9f, 6.0f };
-	trailerInfo.vehicleInfo.box4 = { 2.0f, 1.9f, 0.1f };
-	trailerInfo.vehicleInfo.box5 = { 2.0f, 1.9f, 0.1f };
-	trailerInfo.vehicleInfo.origin = { 0.0f, 0.0f, 0.0f };
+	trailerInfo.box1 = { 2.0f, 0.1f, 6.0f };
+	trailerInfo.box2 = { 0.1f, 1.9f, 6.0f };
+	trailerInfo.box3 = { 0.1f, 1.9f, 6.0f };
+	trailerInfo.box4 = { 2.0f, 1.9f, 0.1f };
+	trailerInfo.box5 = { 2.0f, 1.9f, 0.1f };
+	trailerInfo.origin = { 0.0f, 0.0f, 0.0f };
 
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
@@ -136,7 +136,7 @@ update_status ModuleSceneIntro::Update(float dt)
 		App->debug = !App->debug;
 	}
 
-	remolque->RenderTrailer();
+	remolque->Render();
 
 	return UPDATE_CONTINUE;
 }

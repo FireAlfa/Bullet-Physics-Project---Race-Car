@@ -333,46 +333,37 @@ PhysVehicle3D* ModulePhysics3D::AddTrailer(TrailerInfo& info)
 {
 	btTransform t;
 	t.setIdentity();
-	t.setOrigin(info.vehicleInfo.origin);
+	t.setOrigin(info.origin);
 
-	btBoxShape* box1 = new btBoxShape(info.vehicleInfo.box1);
-	btBoxShape* box2 = new btBoxShape(info.vehicleInfo.box2);
-	btBoxShape* box3 = new btBoxShape(info.vehicleInfo.box3);
-	btBoxShape* box4 = new btBoxShape(info.vehicleInfo.box4);
-	btBoxShape* box5 = new btBoxShape(info.vehicleInfo.box5);
+	btBoxShape* box1 = new btBoxShape(info.box1);
+	btBoxShape* box2 = new btBoxShape(info.box2);
+	btBoxShape* box3 = new btBoxShape(info.box3);
+	btBoxShape* box4 = new btBoxShape(info.box4);
+	btBoxShape* box5 = new btBoxShape(info.box5);
 
 	btCompoundShape* auxBox1 = new btCompoundShape();
 	auxBox1->addChildShape(t, box1);
 	t.setIdentity();
-	t.setOrigin(btVector3(info.vehicleInfo.origin.getX() + info.vehicleInfo.box1.getX() - info.vehicleInfo.box1.getY(),
-		info.vehicleInfo.origin.getY() + info.vehicleInfo.box2.getY() + info.vehicleInfo.box1.getY(),
-		info.vehicleInfo.origin.getZ()));
+	t.setOrigin(btVector3(info.origin.getX() + 2 - 0.1f, info.origin.getY() + 1.9f + 0.1f, info.origin.getZ()));
 	auxBox1->addChildShape(t, box2);
-	info.vehicleInfo.t2 = &t;
 	t.setIdentity();
-	t.setOrigin(info.vehicleInfo.origin);
+	t.setOrigin(info.origin);
 	btCompoundShape* auxBox2 = new btCompoundShape();
 	auxBox2->addChildShape(t, auxBox1);
 	t.setIdentity();
-	t.setOrigin(btVector3(info.vehicleInfo.origin.getX() - info.vehicleInfo.box1.getX() + info.vehicleInfo.box1.getY(),
-		info.vehicleInfo.origin.getY() + info.vehicleInfo.box2.getY() + info.vehicleInfo.box1.getY(),
-		info.vehicleInfo.origin.getZ()));
+	t.setOrigin(btVector3(info.origin.getX() -2 + 0.1f, info.origin.getY() + 1.9f + 0.1f, info.origin.getZ()));
 	auxBox2->addChildShape(t, box3);
-	t.setOrigin(info.vehicleInfo.origin);
+	t.setOrigin(info.origin);
 	btCompoundShape* auxBox3 = new btCompoundShape();
 	auxBox3->addChildShape(t, auxBox2);
 	t.setIdentity();
-	t.setOrigin(btVector3(info.vehicleInfo.origin.getX(),
-		info.vehicleInfo.origin.getY() + info.vehicleInfo.box2.getY() + info.vehicleInfo.box1.getY(),
-		info.vehicleInfo.origin.getZ() - info.vehicleInfo.box1.getZ() + info.vehicleInfo.box1.getY()));
+	t.setOrigin(btVector3(info.origin.getX(), info.origin.getY() + 1.9f + 0.1f, info.origin.getZ() -6 + 0.1f));
 	auxBox3->addChildShape(t, box4);
-	t.setOrigin(info.vehicleInfo.origin);
+	t.setOrigin(info.origin);
 	btCompoundShape* auxBox4 = new btCompoundShape();
 	auxBox4->addChildShape(t, auxBox3);
 	t.setIdentity();
-	t.setOrigin(btVector3(info.vehicleInfo.origin.getX(),
-		info.vehicleInfo.origin.getY() + info.vehicleInfo.box2.getY() + info.vehicleInfo.box1.getY(),
-		info.vehicleInfo.origin.getZ() + info.vehicleInfo.box1.getZ() - info.vehicleInfo.box1.getY()));
+	t.setOrigin(btVector3(info.origin.getX(), info.origin.getY() + 1.9f + 0.1f, info.origin.getZ() + 6 - 0.1));
 	auxBox4->addChildShape(t, box5);
 
 
