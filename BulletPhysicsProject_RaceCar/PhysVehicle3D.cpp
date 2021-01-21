@@ -69,6 +69,57 @@ void PhysVehicle3D::Render()
 	bridge.Render();
 }
 
+void PhysVehicle3D::RenderTrailer()
+{
+	Cylinder wheel;
+
+	wheel.color = Blue;
+
+	for (int i = 0; i < vehicle->getNumWheels(); ++i)
+	{
+		wheel.radius = info.wheels[0].radius;
+		wheel.height = info.wheels[0].width;
+
+		vehicle->updateWheelTransform(i);
+		vehicle->getWheelInfo(i).m_worldTransform.getOpenGLMatrix(&wheel.transform);
+
+		wheel.Render();
+	}
+
+	Cube box1(info.box1.getX()*2, info.box1.getY() *2, info.box1.getZ() *2);
+	box1.color = Red;
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&box1.transform);
+	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
+	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
+	offset = offset.rotate(q.getAxis(), q.getAngle());
+	box1.transform.M[12] += offset.getX();
+	box1.transform.M[13] += offset.getY();
+	box1.transform.M[14] += offset.getZ();
+
+	Cube box2(info.box2.getX() * 2, info.box2.getY() * 2, info.box2.getZ() * 2);
+	box2.color = Red;
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&box2.transform);
+	q = info.t2->getRotation();
+	offset = offset.rotate(q.getAxis(), q.getAngle());
+	box2.transform.M[12] += offset.getX();
+	box2.transform.M[13] += offset.getY();
+	box2.transform.M[14] += offset.getZ();
+
+	Cube box3(info.box3.getX() * 2, info.box3.getY() * 2, info.box3.getZ() * 2);
+	box3.color = Red;
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&box3.transform);
+	q = vehicle->getChassisWorldTransform().getRotation();
+	offset = offset.rotate(q.getAxis(), q.getAngle());
+	box3.transform.M[12] += offset.getX();
+	box3.transform.M[13] += offset.getY();
+	box3.transform.M[14] += offset.getZ();
+
+
+	box1.Render();
+	box2.Render();
+	box3.Render();
+}
+
 // ----------------------------------------------------------------------------
 void PhysVehicle3D::ApplyEngineForce(float force)
 {

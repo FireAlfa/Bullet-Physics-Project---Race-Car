@@ -6,6 +6,7 @@
 
 class btRaycastVehicle;
 struct PhysBody3D;
+class btTransform;
 
 struct Wheel
 {
@@ -40,6 +41,14 @@ struct VehicleInfo
 
 	Wheel* wheels;
 	int num_wheels;
+
+	btVector3 origin;
+	btVector3 box1;
+	btVector3 box2;
+	btTransform* t2;
+	btVector3 box3;
+	btVector3 box4;
+	btVector3 box5;
 };
 
 struct TrailerInfo
@@ -47,14 +56,6 @@ struct TrailerInfo
 	~TrailerInfo();
 
 	struct VehicleInfo vehicleInfo;
-
-	btVector3 origin;
-
-	btVector3 box1;
-	btVector3 box2;
-	btVector3 box3;
-	btVector3 box4;
-	btVector3 box5;
 };
 
 
@@ -65,12 +66,12 @@ public:
 	~PhysVehicle3D();
 
 	void Render();
+	void RenderTrailer();
 	void ApplyEngineForce(float force);
 	void Brake(float force);
 	void Turn(float degrees);
 	float GetKmh() const;
 public:
-
 	VehicleInfo info;
 	btRaycastVehicle* vehicle;
 };
