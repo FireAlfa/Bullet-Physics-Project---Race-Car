@@ -48,11 +48,19 @@ bool ModuleSceneIntro::Start()
 
 	tree.color = cTree;
 	tree.SetPos(15, 0.25, 50);
-	tree.SetRotation(90, vec3(0, 1, 0));
+	tree.SetRotation(90, vec3(0, 0, 1));
 	tree.radius = 0.5;
 	tree.height = 10;
 	tree.axis = true;
-	App->physics->AddBody(tree, 200);
+	App->physics->AddBody(tree, 10000);
+
+	tree1.color = cTree;
+	tree1.SetPos(15, 0.25, 100);
+	tree1.SetRotation(90, vec3(0, 0, 1));
+	tree1.radius = 0.5;
+	tree1.height = 10;
+	tree1.axis = true;
+	App->physics->AddBody(tree, 10000);
 
 	VehicleInfo remolqueInfo;
 
@@ -166,6 +174,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	building2.Render();
 	building3.Render();
 	tree.Render();
+	tree1.Render();
 
 	return UPDATE_CONTINUE;
 }

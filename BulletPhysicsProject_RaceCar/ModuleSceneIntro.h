@@ -29,6 +29,7 @@ public:
 	Cube building2;
 	Cube building3;
 	Cylinder tree;
+	Cylinder tree1;
 
 	PhysVehicle3D* remolque;
 };
