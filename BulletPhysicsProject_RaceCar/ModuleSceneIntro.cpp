@@ -22,6 +22,38 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	building.color = cBuilding;
+	building.SetPos(40, 30, 40);
+	building.size = { 20,60,20 };
+	building.axis = true;
+	App->physics->AddBody(building, 10000);
+
+	building1.color = cBuilding;
+	building1.SetPos(40, 30, 90);
+	building1.size = { 20,60,20 };
+	building1.axis = true;
+	App->physics->AddBody(building1, 10000);
+
+	building2.color = cBuilding;
+	building2.SetPos(40, 30, 140);
+	building2.size = { 20,60,20 };
+	building2.axis = true;
+	App->physics->AddBody(building2, 10000);
+
+	building3.color = cBuilding;
+	building3.SetPos(40, 30, 190);
+	building3.size = { 20,60,20 };
+	building3.axis = true;
+	App->physics->AddBody(building3, 10000);
+
+	tree.color = cTree;
+	tree.SetPos(15, 0.25, 50);
+	tree.SetRotation(90, vec3(0, 1, 0));
+	tree.radius = 0.5;
+	tree.height = 10;
+	tree.axis = true;
+	App->physics->AddBody(tree, 200);
+
 	VehicleInfo remolqueInfo;
 
 	// Remolque properties ---------------------------------------
@@ -119,7 +151,7 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
-	p.color = White;
+	p.color = cFloor;
 	p.Render();
 
 
@@ -129,6 +161,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 	remolque->Render();
+	building.Render();
+	building1.Render();
+	building2.Render();
+	building3.Render();
+	tree.Render();
 
 	return UPDATE_CONTINUE;
 }

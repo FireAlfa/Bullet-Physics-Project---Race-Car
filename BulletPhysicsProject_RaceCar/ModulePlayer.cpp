@@ -137,7 +137,8 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	turn = acceleration = brake = 0.0f;
+	turn = acceleration = 0;
+	brake = 2.5f;
 	if (engine == true)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)

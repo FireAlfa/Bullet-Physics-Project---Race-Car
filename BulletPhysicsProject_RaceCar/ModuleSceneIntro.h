@@ -24,18 +24,11 @@ public:
 
 public:
 	
+	Cube building;
+	Cube building1;
+	Cube building2;
+	Cube building3;
+	Cylinder tree;
+
 	PhysVehicle3D* remolque;
-
-	PhysBody3D* pb_chassis;
-	Cube p_chassis;
-
-	PhysBody3D* pb_wheel;
-	Cylinder p_wheel;
-
-	PhysBody3D* pb_wheel2;
-	Cylinder p_wheel2;
-
-	PhysMotor3D* left_wheel;
-	PhysMotor3D* right_wheel;
-
 };

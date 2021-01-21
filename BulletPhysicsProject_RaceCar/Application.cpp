@@ -32,8 +32,6 @@ Application::Application()
 	AddModule(renderer3D);
 
 
-
-
 	bool debug = false;
 }
 
