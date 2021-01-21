@@ -134,7 +134,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if ((body1 == remolque || body2 == remolque)
+	if ((body1 == remolque || body2 == remolque))
 	{
 		btTransform frameInA, frameInB;
 		frameInA = btTransform::getIdentity();
