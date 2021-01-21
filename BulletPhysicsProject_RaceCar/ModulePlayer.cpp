@@ -113,7 +113,8 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0.0f, 1.5f, 14.0f);
+	vehicle->SetPos(0.0f, 1.5f, 19.0f);
+	vehicle->GetBody()->setFriction(4);
 	vehicle->collision_listeners.add(this);
 	vehicle->GetBody()->setUserPointer(vehicle);
 
@@ -137,7 +138,8 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	turn = acceleration = brake = 0.0f;
+	turn = acceleration = 0;
+	brake = 3.0f;
 	if (engine == true)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
