@@ -30,22 +30,22 @@ bool ModuleSceneIntro::Start()
 	{
 		float posZ = 0;
 		float posX = 0;
-		for (int i = 0; i < 5; ++i)
+		for (int i = 0; i < 4; ++i)
 		{
 			for (int j = 0; j < 4; ++j)
 			{
-				posZ = 30.0f * i;
-				posX = 40.0f * j;
-				CreateBuilding(20.0f - 10.0f - posX, 5.0f, -20.0f + 10.0f + posZ, { 20, 5, 20 }, true);
+				posZ = 4 * TILE_SIZE * i;
+				posX = 4 * TILE_SIZE * j;
+				CreateBuilding(2 * TILE_SIZE - TILE_SIZE - posX, TILE_SIZE / 2.0f, -2 * TILE_SIZE + TILE_SIZE + posZ, { 2 * TILE_SIZE, TILE_SIZE/2, 2 * TILE_SIZE }, true);
 			}
 		}
 		posZ = 0;
 		posX = 0;
 		
-		for (int i = 0; i < 5; ++i)
+		for (int i = 0; i < 4; ++i)
 		{
-			posZ = 60.0f * i;	
-			CreateBuilding(280.0f, 5.0f, -20.0f + posZ, { 30, 5, 20 }, true);
+			posZ = 4 * TILE_SIZE * i;	
+			CreateBuilding(14 * TILE_SIZE, TILE_SIZE / 2.0f, -2 * TILE_SIZE + TILE_SIZE+ posZ, { 3 * TILE_SIZE, TILE_SIZE/2 , 2 * TILE_SIZE }, true);
 		}
 
 		/*tree.color = cTree;

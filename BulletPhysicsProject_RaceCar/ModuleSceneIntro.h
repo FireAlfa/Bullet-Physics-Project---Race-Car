@@ -6,6 +6,7 @@
 #include "p2List.h"
 
 #define MAX_SNAKE 2
+#define TILE_SIZE 10.0f
 
 struct PhysBody3D;
 struct PhysMotor3D;
