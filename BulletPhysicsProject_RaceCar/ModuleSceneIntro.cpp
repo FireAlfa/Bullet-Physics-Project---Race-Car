@@ -28,6 +28,7 @@ bool ModuleSceneIntro::Start()
 	// Create buildings
 	//
 	{
+		// Central grid
 		float posZ = 0;
 		float posX = 0;
 		for (int i = 0; i < 4; ++i)
@@ -36,17 +37,59 @@ bool ModuleSceneIntro::Start()
 			{
 				posZ = 4 * TILE_SIZE * i;
 				posX = 4 * TILE_SIZE * j;
-				CreateBuilding(2 * TILE_SIZE - TILE_SIZE - posX, TILE_SIZE / 2.0f, -2 * TILE_SIZE + TILE_SIZE + posZ, { 2 * TILE_SIZE, TILE_SIZE/2, 2 * TILE_SIZE }, true);
+				CreateBuilding(2 * TILE_SIZE - (2 * TILE_SIZE / 2) - posX, 6 * TILE_SIZE, -2 * TILE_SIZE + (2 * TILE_SIZE / 2) + posZ, { 2 * TILE_SIZE, 6 * TILE_SIZE, 2 * TILE_SIZE }, true);
 			}
 		}
-		posZ = 0;
-		posX = 0;
-		
+
+		// Left column
 		for (int i = 0; i < 4; ++i)
 		{
 			posZ = 4 * TILE_SIZE * i;	
-			CreateBuilding(14 * TILE_SIZE, TILE_SIZE / 2.0f, -2 * TILE_SIZE + TILE_SIZE+ posZ, { 3 * TILE_SIZE, TILE_SIZE/2 , 2 * TILE_SIZE }, true);
+			CreateBuilding(14 * TILE_SIZE - (3 * TILE_SIZE / 2), 3 * TILE_SIZE, -2 * TILE_SIZE + (2 * TILE_SIZE / 2) + posZ, { 3 * TILE_SIZE, 3 * TILE_SIZE, 2 * TILE_SIZE }, true);
 		}
+
+		// City hall
+		CreateBuilding(7 * TILE_SIZE - (TILE_SIZE / 2), TILE_SIZE , 9 * TILE_SIZE + (TILE_SIZE / 2), { TILE_SIZE, TILE_SIZE, TILE_SIZE }, true);
+		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 2 * TILE_SIZE, 10 * TILE_SIZE + (2 * TILE_SIZE / 2), { 5 * TILE_SIZE, 2 * TILE_SIZE, 2 * TILE_SIZE }, true);
+		CreateBuilding(8 * TILE_SIZE - (3 * TILE_SIZE / 2), 1.5f * TILE_SIZE, 12 * TILE_SIZE + (TILE_SIZE / 2), { 3 * TILE_SIZE, 1.5f * TILE_SIZE, TILE_SIZE }, true);
+		
+		// City hall front building
+		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 2.5f * TILE_SIZE, -2 * TILE_SIZE + (2 * TILE_SIZE / 2), { 5 * TILE_SIZE, 2.5 * TILE_SIZE , 2 * TILE_SIZE }, true);
+		
+		// Right column
+		for (int i = 0; i < 8; ++i)
+		{
+			posZ = 3 * TILE_SIZE * i;
+			CreateBuilding(-16 * TILE_SIZE - TILE_SIZE, 2 * TILE_SIZE / 2.0f, -7 * TILE_SIZE + (2 * TILE_SIZE / 2) + posZ, {TILE_SIZE, 2 * TILE_SIZE / 2, 2 * TILE_SIZE }, true);
+		}
+
+		// Centre back row
+		CreateBuilding(14 * TILE_SIZE - (3 * TILE_SIZE / 2), 4 * TILE_SIZE, -8 * TILE_SIZE + (4 * TILE_SIZE / 2), { 3 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE }, true);
+		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 1.5f * TILE_SIZE, -8 * TILE_SIZE + (4 * TILE_SIZE / 2), { 5 * TILE_SIZE, 1.5f * TILE_SIZE, 4 * TILE_SIZE }, true);
+		for (int i = 0; i < 2; ++i)
+		{
+			posX = 4 * TILE_SIZE * i;
+			CreateBuilding(2 * TILE_SIZE - (2 * TILE_SIZE / 2) - posX, 4 * TILE_SIZE, -8 * TILE_SIZE + (4 * TILE_SIZE / 2), { 2 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE }, true);
+		}
+
+		// Back row
+		CreateBuilding(14 * TILE_SIZE - (4 * TILE_SIZE / 2), 3.5f * TILE_SIZE, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 4 * TILE_SIZE, 3.5f * TILE_SIZE, 3 * TILE_SIZE }, true);
+		for (int i = 0; i < 3; ++i)
+		{
+			posX = 5 * TILE_SIZE * i;
+			CreateBuilding(9 * TILE_SIZE - (3 * TILE_SIZE / 2) - posX, 2.8f * TILE_SIZE, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 3 * TILE_SIZE, 2.8f * TILE_SIZE, 3 * TILE_SIZE }, true);
+		}
+		CreateBuilding(-6 * TILE_SIZE - (3 * TILE_SIZE / 2), 4 * TILE_SIZE, -13 * TILE_SIZE + (4 * TILE_SIZE / 2), { 3 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE }, true);
+		CreateBuilding(-10 * TILE_SIZE - (2 * TILE_SIZE / 2), 2.5f * TILE_SIZE, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 2 * TILE_SIZE, 2.5f * TILE_SIZE, 3 * TILE_SIZE }, true);
+	}
+
+
+	//
+	// Create parks
+	//
+	{
+		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 0.2f, TILE_SIZE + (7 * TILE_SIZE / 2), { 5 * TILE_SIZE, 0.2f, 7 * TILE_SIZE }, true, Green);
+		CreateBuilding(-6 * TILE_SIZE - (7 * TILE_SIZE / 2), 0.2f, -7 * TILE_SIZE + (4 * TILE_SIZE / 2), { 7 * TILE_SIZE, 0.2f, 4 * TILE_SIZE }, true, Green);
 
 		/*tree.color = cTree;
 		tree.SetPos(15, 0.25, 50);
@@ -64,6 +107,18 @@ bool ModuleSceneIntro::Start()
 		tree1.axis = true;
 		App->physics->AddBody(tree, 10000);*/
 	}
+
+
+	//
+	// Create roundabouts
+	//
+	{
+		CreateBuilding(0 * TILE_SIZE - (2 * TILE_SIZE / 2), 0.5f, 13 * TILE_SIZE + (2 * TILE_SIZE / 2), { 2 * TILE_SIZE, 0.5f, 2 * TILE_SIZE }, true, cRoundabout);
+		CreateBuilding(-13 * TILE_SIZE - (3 * TILE_SIZE / 2), 0.5f, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 3 * TILE_SIZE, 0.5f, 3 * TILE_SIZE }, true, cRoundabout);
+		CreateBuilding(-14 * TILE_SIZE - (TILE_SIZE / 2), 3.0f, -12 * TILE_SIZE + (TILE_SIZE / 2), { TILE_SIZE / 2, 2.0f, TILE_SIZE / 2 }, true, cStatue);
+	}
+
+
 	//
 	// Create trailer
 	//

@@ -33,3 +33,5 @@ extern Color White;
 extern Color cBuilding;
 extern Color cFloor;
 extern Color cTree;
+extern Color cRoundabout;
+extern Color cStatue;
