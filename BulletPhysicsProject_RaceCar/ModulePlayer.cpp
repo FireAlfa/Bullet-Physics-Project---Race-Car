@@ -265,14 +265,7 @@ void ModulePlayer::GenerateDeliveryPoint()
 	srand(time(NULL));
 	int r = rand() % App->scene_intro->deliveryPoints.Count();
 
-	if (playerDeliveryPoint != nullptr)
-	{
-		while (playerDeliveryPoint == App->scene_intro->deliveryPoints.At(r))
-		{
-			r = rand() % App->scene_intro->deliveryPoints.Count();
-			playerDeliveryPoint = App->scene_intro->deliveryPoints.At(r);
-		}
-	}
+	playerDeliveryPoint = App->scene_intro->deliveryPoints.At(r);
 	App->scene_intro->CreateDeliverySensor(playerDeliveryPoint->getX(), playerDeliveryPoint->getY(), playerDeliveryPoint->getZ());
 }
 
@@ -280,13 +273,7 @@ void ModulePlayer::GenerateCollectPoint()
 {
 	srand(time(NULL));
 	int r = rand() % App->scene_intro->deliveryPoints.Count();
-	if (playerCollectPoint != nullptr)
-	{
-		while (playerCollectPoint == App->scene_intro->deliveryPoints.At(r))
-		{
-			r = rand() % App->scene_intro->deliveryPoints.Count();
-			playerCollectPoint = App->scene_intro->deliveryPoints.At(r);
-		}
-	}
+	
+	playerCollectPoint = App->scene_intro->deliveryPoints.At(r);
 	App->scene_intro->CreateTrailer(playerCollectPoint->getX(), 1.5f, playerCollectPoint->getZ());
 }
