@@ -30,6 +30,7 @@ bool ModulePlayer::Start()
 	engineMaxSpeedFx = App->audio->LoadFx("Assets/FX/truck_max_speed.wav");
 	engineStopFx = App->audio->LoadFx("Assets/FX/truck_stop.wav");
 	lockFx = App->audio->LoadFx("Assets/FX/truck_lock.wav");
+	deliveryFx = App->audio->LoadFx("Assets/FX/delivery.wav");
 
 	//Play stop engine sound
 	App->audio->PlayFx(engineOnFx);

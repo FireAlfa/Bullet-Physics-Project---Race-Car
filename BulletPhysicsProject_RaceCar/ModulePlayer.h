@@ -53,4 +53,5 @@ public:
 	uint engineMaxSpeedFx;
 	uint engineStopFx;
 	uint lockFx;
+	uint deliveryFx;
 };
