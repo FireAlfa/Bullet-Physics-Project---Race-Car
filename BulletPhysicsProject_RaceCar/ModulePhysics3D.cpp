@@ -232,6 +232,11 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass)
 	return pbody;
 }
 
+void ModulePhysics3D::RemoveBodyFromWorld(btRigidBody* body)
+{
+	world->removeRigidBody(body);
+}
+
 
 // ---------------------------------------------------------
 PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)

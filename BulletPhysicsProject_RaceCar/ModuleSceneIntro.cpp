@@ -118,10 +118,33 @@ bool ModuleSceneIntro::Start()
 		CreateBuilding(-14 * TILE_SIZE - (TILE_SIZE / 2), 3.0f, -12 * TILE_SIZE + (TILE_SIZE / 2), { TILE_SIZE / 2, 2.0f, TILE_SIZE / 2 }, true, cStatue);
 	}
 
+	return ret;
+}
 
-	//
-	// Create trailer
-	//
+void ModuleSceneIntro::DefineDeliveryPoints()
+{
+	//Every city point of deliver and collect defined
+	deliveryPoints.PushBack(btVector3(-7 * TILE_SIZE, 0, 4 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(-4*TILE_SIZE, 0, TILE_SIZE*11));
+	deliveryPoints.PushBack(btVector3(4*TILE_SIZE, 0, 5*TILE_SIZE));
+
+}
+
+void ModuleSceneIntro::CreateDeliverySensor(float x, float y, float z)
+{
+	Cube cubeSensor;
+	cubeSensor.color = Blue;
+	cubeSensor.SetPos( x - 3.5, y + 2.5, z + 3.5);
+	cubeSensor.size = vec3(7,5,7);
+	cubeSensor.axis = true;
+
+	deliverySensor = App->physics->AddBuilding(cubeSensor, 10000);
+	deliverySensor->collision_listeners.add(this);
+	deliverySensor->GetBody()->setUserPointer(deliverySensor);
+}
+
+void ModuleSceneIntro::CreateTrailer(float x, float y, float z)
+{
 	{
 		VehicleInfo trailerInfo;
 
@@ -200,21 +223,10 @@ bool ModuleSceneIntro::Start()
 		trailerInfo.wheels[3].steering = false;
 
 		remolque = App->physics->AddVehicle(trailerInfo);
-		remolque->SetPos(0.0f - 2.0f, 1.5f, 5.0f);
+		remolque->SetPos(x, y, z);
 		remolque->collision_listeners.add(this);
 		remolque->GetBody()->setUserPointer(remolque);
 	}
-
-	return ret;
-}
-
-void ModuleSceneIntro::DefineDeliveryPoints()
-{
-	//Every city point of deliver and collect defined
-	deliveryPoints.PushBack(&btVector3(0, 0, 0));
-	deliveryPoints.PushBack(&btVector3(0, 25, 10));
-	deliveryPoints.PushBack(&btVector3(0, 40, 0));
-
 }
 
 // Load assets
@@ -251,7 +263,14 @@ update_status ModuleSceneIntro::Update(float dt)
 		buildingItem->data.Render();
 		buildingItem = buildingItem->next;
 	}
-	remolque->Render();
+	if (remolque != nullptr)
+	{
+		remolque->Render();
+	}
+	if (deliverySensor != nullptr)
+	{
+		deliverySensor->cube.Render();
+	}
 	/*tree.Render();
 	tree1.Render();*/
 
@@ -260,7 +279,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1 == remolque || body2 == remolque)
+	if ((body1 == remolque && body2 == App->player->vehicle) || (body2 == remolque && body1 == App->player->vehicle) && isJoint == false)
 	{
 		App->player->GenerateDeliveryPoint();
 		btTransform frameInA, frameInB;
@@ -269,10 +288,27 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		frameInB = btTransform::getIdentity();
 		frameInB.setOrigin(btVector3(btScalar(remolque->info.chassis_offset.x), btScalar(remolque->info.chassis_offset.y), btScalar(remolque->info.chassis_offset.z + 2)));
 
-		btGeneric6DofConstraint* cs = new btGeneric6DofConstraint(*App->player->vehicle->GetBody(), *remolque->GetBody(), frameInA, frameInB, false);
+		cs = new btGeneric6DofConstraint(*App->player->vehicle->GetBody(), *remolque->GetBody(), frameInA, frameInB, false);
 
 		cs->setDbgDrawSize(2.0f);
 		App->physics->world->addConstraint(cs);
+		isJoint = true;
+	}
+	if ((body1 == deliverySensor && body2 == App->player->vehicle) || (body2 == deliverySensor && body1 == App->player->vehicle))
+	{
+		if (cs != nullptr)
+		{
+			App->physics->world->removeConstraint(cs);
+			cs = nullptr;
+		}
+		if (remolque != nullptr)
+		{
+			App->physics->vehicles.del(App->physics->vehicles.findNode(remolque));
+			App->physics->world->removeVehicle(remolque->vehicle);
+			App->physics->world->removeRigidBody(remolque->GetBody());
+			remolque = nullptr;
+			App->player->GenerateCollectPoint();
+		}
 	}
 }
 

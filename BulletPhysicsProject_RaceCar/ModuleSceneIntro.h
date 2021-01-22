@@ -12,6 +12,7 @@ struct PhysBody3D;
 struct PhysMotor3D;
 struct PhysVehicle3D;
 class btVector3;
+class btGeneric6DofConstraint;
 
 class ModuleSceneIntro : public Module
 {
@@ -25,20 +26,26 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void CreateBuilding(float x, float y, float z, vec3 size, bool axis, Color color = cBuilding);
+	void CreateTrailer(float x, float y, float z);
+
+	void DefineDeliveryPoints();
+	void CreateDeliverySensor(float x, float y, float z);
 
 public:
 	
 	p2List<Cube> buildings;
 
-	void DefineDeliveryPoints();
-
 public:
 	
 
-	p2DynArray<btVector3*> deliveryPoints;
+	p2DynArray<btVector3> deliveryPoints;
+
+	btGeneric6DofConstraint* cs;
 
 	Cylinder tree;
 	Cylinder tree1;
+	PhysBody3D* deliverySensor = nullptr;
+	bool isJoint = false;
 
 	PhysVehicle3D* remolque;
 };
