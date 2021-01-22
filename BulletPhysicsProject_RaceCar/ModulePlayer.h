@@ -40,6 +40,7 @@ public:
 	float brake;
 	bool engine = true;
 	bool map = false;
+	bool hitched = false;
 
 	btVector3* playerDeliveryPoint = nullptr;
 	btVector3* playerCollectPoint = nullptr;
@@ -51,4 +52,5 @@ public:
 	uint engineAccelerationFx;
 	uint engineMaxSpeedFx;
 	uint engineStopFx;
+	uint lockFx;
 };

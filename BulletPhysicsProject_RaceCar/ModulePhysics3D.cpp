@@ -94,6 +94,11 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 				{
 					item->data->OnCollision(pbodyA, pbodyB);
 					item = item->next;
+					if (App->player->hitched == false)
+					{
+						App->audio->PlayFx(App->player->lockFx);
+						App->player->hitched = true;
+					}
 				}
 
 				item = pbodyB->collision_listeners.getFirst();
@@ -101,6 +106,11 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 				{
 					item->data->OnCollision(pbodyB, pbodyA);
 					item = item->next;
+					if (App->player->hitched == false)
+					{
+						App->audio->PlayFx(App->player->lockFx);
+						App->player->hitched = true;
+					}
 				}
 			}
 		}
