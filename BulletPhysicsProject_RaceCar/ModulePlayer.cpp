@@ -114,7 +114,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0.0f, 1.5f, 14.0f);
+	vehicle->SetPos(0.0f - 2.0f, 1.5f, 14.0f);
 	vehicle->collision_listeners.add(this);
 	vehicle->GetBody()->setUserPointer(vehicle);
 

@@ -23,7 +23,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-	void CreateBuilding(float x, float y, float z, vec3 size, bool axis);
+	void CreateBuilding(float x, float y, float z, vec3 size, bool axis, Color color = cBuilding);
 
 public:
 	

@@ -28,26 +28,41 @@ bool ModuleSceneIntro::Start()
 	// Create buildings
 	//
 	{
-		CreateBuilding(80.0f, 5.0f, 80.0f, { 20, 5, 20 }, true);
-		CreateBuilding(80.0f, 5.0f, 180.0f, { 20, 5, 20 }, true);
-		CreateBuilding(80.0f, 5.0f, 280.0f, { 20, 5, 20 }, true);
-		CreateBuilding(80.0f, 5.0f, 380.0f, { 20, 5, 20 }, true);
+		float posZ = 0;
+		float posX = 0;
+		for (int i = 0; i < 5; ++i)
+		{
+			for (int j = 0; j < 4; ++j)
+			{
+				posZ = 30.0f * i;
+				posX = 40.0f * j;
+				CreateBuilding(20.0f - 10.0f - posX, 5.0f, -20.0f + 10.0f + posZ, { 20, 5, 20 }, true);
+			}
+		}
+		posZ = 0;
+		posX = 0;
+		
+		for (int i = 0; i < 5; ++i)
+		{
+			posZ = 60.0f * i;	
+			CreateBuilding(280.0f, 5.0f, -20.0f + posZ, { 30, 5, 20 }, true);
+		}
 
-		tree.color = cTree;
+		/*tree.color = cTree;
 		tree.SetPos(15, 0.25, 50);
 		tree.SetRotation(90, vec3(0, 0, 1));
 		tree.radius = 0.5;
 		tree.height = 10;
 		tree.axis = true;
-		App->physics->AddBody(tree, 10000);
+		App->physics->AddBody(tree, 10000);*/
 
-		tree1.color = cTree;
+		/*tree1.color = cTree;
 		tree1.SetPos(15, 0.25, 100);
 		tree1.SetRotation(90, vec3(0, 0, 1));
 		tree1.radius = 0.5;
 		tree1.height = 10;
 		tree1.axis = true;
-		App->physics->AddBody(tree, 10000);
+		App->physics->AddBody(tree, 10000);*/
 	}
 	//
 	// Create trailer
@@ -130,7 +145,7 @@ bool ModuleSceneIntro::Start()
 		trailerInfo.wheels[3].steering = false;
 
 		remolque = App->physics->AddVehicle(trailerInfo);
-		remolque->SetPos(0.0f, 1.5f, 5.0f);
+		remolque->SetPos(0.0f - 2.0f, 1.5f, 5.0f);
 		remolque->collision_listeners.add(this);
 		remolque->GetBody()->setUserPointer(remolque);
 	}
@@ -182,8 +197,8 @@ update_status ModuleSceneIntro::Update(float dt)
 		buildingItem = buildingItem->next;
 	}
 	remolque->Render();
-	tree.Render();
-	tree1.Render();
+	/*tree.Render();
+	tree1.Render();*/
 
 	return UPDATE_CONTINUE;
 }
@@ -206,11 +221,11 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 }
 
-void ModuleSceneIntro::CreateBuilding(float x, float y, float z, vec3 size, bool axis)
+void ModuleSceneIntro::CreateBuilding(float x, float y, float z, vec3 size, bool axis, Color color)
 {
 	Cube cube;
-	cube.color = cBuilding;
-	cube.SetPos(x/2.0f, y/2.0f, z/2.0f);
+	cube.color = color;
+	cube.SetPos(x, y/2.0f, z);
 	cube.size = size;
 	cube.axis = axis;
 	buildings.add(cube);
