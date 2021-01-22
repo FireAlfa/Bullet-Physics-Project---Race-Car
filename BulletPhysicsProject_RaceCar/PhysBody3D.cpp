@@ -1,4 +1,5 @@
 #include "PhysBody3D.h"
+#include "Primitive.h"
 #include "glmath.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
@@ -10,6 +11,17 @@ PhysBody3D::PhysBody3D(btRigidBody* body) : body(body)
 PhysBody3D::~PhysBody3D()
 {
 	delete body;
+}
+
+
+// ---------------------------------------------------------
+void PhysBody3D::Render()
+{
+	//Cube building(bInfo.get;
+
+	//building.color = cBuilding;
+
+
 }
 
 // ---------------------------------------------------------

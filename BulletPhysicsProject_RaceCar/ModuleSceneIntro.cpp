@@ -22,29 +22,33 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	building.color = cBuilding;
-	building.SetPos(40, 30, 40);
-	building.size = { 20,60,20 };
-	building.axis = true;
-	App->physics->AddBody(building, 10000);
+	//
+	// Create buildings
+	//
+	{
+		building.color = cBuilding;
+		building.SetPos(40, 30, 40);
+		building.size = { 20,60,20 };
+		building.axis = true;
+		App->physics->AddBody(building, 10000);
 
-	building1.color = cBuilding;
-	building1.SetPos(40, 30, 90);
-	building1.size = { 20,60,20 };
-	building1.axis = true;
-	App->physics->AddBody(building1, 10000);
+		building1.color = cBuilding;
+		building1.SetPos(40, 30, 90);
+		building1.size = { 20,60,20 };
+		building1.axis = true;
+		App->physics->AddBody(building1, 10000);
 
-	building2.color = cBuilding;
-	building2.SetPos(40, 30, 140);
-	building2.size = { 20,60,20 };
-	building2.axis = true;
-	App->physics->AddBody(building2, 10000);
+		building2.color = cBuilding;
+		building2.SetPos(40, 30, 140);
+		building2.size = { 20,60,20 };
+		building2.axis = true;
+		App->physics->AddBody(building2, 10000);
 
-	building3.color = cBuilding;
-	building3.SetPos(40, 30, 190);
-	building3.size = { 20,60,20 };
-	building3.axis = true;
-	App->physics->AddBody(building3, 10000);
+		building3.color = cBuilding;
+		building3.SetPos(40, 30, 190);
+		building3.size = { 20,60,20 };
+		building3.axis = true;
+		App->physics->AddBody(building3, 10000);
 
 	tree.color = cTree;
 	tree.SetPos(15, 0.25, 50);
@@ -62,86 +66,91 @@ bool ModuleSceneIntro::Start()
 	tree1.axis = true;
 	App->physics->AddBody(tree, 10000);
 
-	VehicleInfo remolqueInfo;
+	//
+	// Create trailer
+	//
+	{
+		VehicleInfo trailerInfo;
 
-	// Remolque properties ---------------------------------------
-	remolqueInfo.chassis_size.Set(2.5f, 3, 9.f);
-	remolqueInfo.chassis_offset.Set(0, 0, 0);
+		// Trailer properties ---------------------------------------
+		trailerInfo.chassis_size.Set(2.5f, 3, 9.f);
+		trailerInfo.chassis_offset.Set(0, 0, 0);
 
-	remolqueInfo.mass = 100.0f;
-	remolqueInfo.suspensionStiffness = 15.88f;
-	remolqueInfo.suspensionCompression = 0.83f;
-	remolqueInfo.suspensionDamping = 0.88f;
-	remolqueInfo.maxSuspensionTravelCm = 1000.0f;
-	remolqueInfo.frictionSlip = 50.5;
-	remolqueInfo.maxSuspensionForce = 6000.0f;
+		trailerInfo.mass = 100.0f;
+		trailerInfo.suspensionStiffness = 15.88f;
+		trailerInfo.suspensionCompression = 0.83f;
+		trailerInfo.suspensionDamping = 0.88f;
+		trailerInfo.maxSuspensionTravelCm = 1000.0f;
+		trailerInfo.frictionSlip = 50.5;
+		trailerInfo.maxSuspensionForce = 6000.0f;
 
-	// Wheel properties ---------------------------------------
-	float connection_height = 1.2f;
-	float wheel_radius = 0.6f;
-	float wheel_width = 0.5f;
-	float suspensionRestLength = 1.2f;
-	vec3 direction(0, -1, 0);
-	vec3 axis(-1, 0, 0);
+		// Wheel properties ---------------------------------------
+		float connection_height = 1.2f;
+		float wheel_radius = 0.6f;
+		float wheel_width = 0.5f;
+		float suspensionRestLength = 1.2f;
+		vec3 direction(0, -1, 0);
+		vec3 axis(-1, 0, 0);
 
-	float half_width_remo = remolqueInfo.chassis_size.x * 0.5f;
-	float half_length_remo = remolqueInfo.chassis_size.z * 0.5f;
+		float half_width_remo = trailerInfo.chassis_size.x * 0.5f;
+		float half_length_remo = trailerInfo.chassis_size.z * 0.5f;
 
-	remolqueInfo.num_wheels = 4;
-	remolqueInfo.wheels = new Wheel[4];
+		trailerInfo.num_wheels = 4;
+		trailerInfo.wheels = new Wheel[4];
 
-	// FRONT-LEFT ------------------------
-	remolqueInfo.wheels[0].connection.Set(half_width_remo - 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius + 1.5);
-	remolqueInfo.wheels[0].direction = direction;
-	remolqueInfo.wheels[0].axis = axis;
-	remolqueInfo.wheels[0].suspensionRestLength = suspensionRestLength;
-	remolqueInfo.wheels[0].radius = wheel_radius;
-	remolqueInfo.wheels[0].width = wheel_width;
-	remolqueInfo.wheels[0].front = false;
-	remolqueInfo.wheels[0].drive = false;
-	remolqueInfo.wheels[0].brake = false;
-	remolqueInfo.wheels[0].steering = false;
+		// FRONT-LEFT ------------------------
+		trailerInfo.wheels[0].connection.Set(half_width_remo - 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius + 1.5);
+		trailerInfo.wheels[0].direction = direction;
+		trailerInfo.wheels[0].axis = axis;
+		trailerInfo.wheels[0].suspensionRestLength = suspensionRestLength;
+		trailerInfo.wheels[0].radius = wheel_radius;
+		trailerInfo.wheels[0].width = wheel_width;
+		trailerInfo.wheels[0].front = false;
+		trailerInfo.wheels[0].drive = false;
+		trailerInfo.wheels[0].brake = false;
+		trailerInfo.wheels[0].steering = false;
 
-	// FRONT-RIGHT ------------------------
-	remolqueInfo.wheels[1].connection.Set(-half_width_remo + 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius + 1.5);
-	remolqueInfo.wheels[1].direction = direction;
-	remolqueInfo.wheels[1].axis = axis;
-	remolqueInfo.wheels[1].suspensionRestLength = suspensionRestLength;
-	remolqueInfo.wheels[1].radius = wheel_radius;
-	remolqueInfo.wheels[1].width = wheel_width;
-	remolqueInfo.wheels[1].front = false;
-	remolqueInfo.wheels[1].drive = false;
-	remolqueInfo.wheels[1].brake = false;
-	remolqueInfo.wheels[1].steering = false;
+		// FRONT-RIGHT ------------------------
+		trailerInfo.wheels[1].connection.Set(-half_width_remo + 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius + 1.5);
+		trailerInfo.wheels[1].direction = direction;
+		trailerInfo.wheels[1].axis = axis;
+		trailerInfo.wheels[1].suspensionRestLength = suspensionRestLength;
+		trailerInfo.wheels[1].radius = wheel_radius;
+		trailerInfo.wheels[1].width = wheel_width;
+		trailerInfo.wheels[1].front = false;
+		trailerInfo.wheels[1].drive = false;
+		trailerInfo.wheels[1].brake = false;
+		trailerInfo.wheels[1].steering = false;
 
-	// REAR-LEFT ------------------------
-	remolqueInfo.wheels[2].connection.Set(half_width_remo - 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius);
-	remolqueInfo.wheels[2].direction = direction;
-	remolqueInfo.wheels[2].axis = axis;
-	remolqueInfo.wheels[2].suspensionRestLength = suspensionRestLength;
-	remolqueInfo.wheels[2].radius = wheel_radius;
-	remolqueInfo.wheels[2].width = wheel_width;
-	remolqueInfo.wheels[2].front = false;
-	remolqueInfo.wheels[2].drive = false;
-	remolqueInfo.wheels[2].brake = false;
-	remolqueInfo.wheels[2].steering = false;
+		// REAR-LEFT ------------------------
+		trailerInfo.wheels[2].connection.Set(half_width_remo - 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius);
+		trailerInfo.wheels[2].direction = direction;
+		trailerInfo.wheels[2].axis = axis;
+		trailerInfo.wheels[2].suspensionRestLength = suspensionRestLength;
+		trailerInfo.wheels[2].radius = wheel_radius;
+		trailerInfo.wheels[2].width = wheel_width;
+		trailerInfo.wheels[2].front = false;
+		trailerInfo.wheels[2].drive = false;
+		trailerInfo.wheels[2].brake = false;
+		trailerInfo.wheels[2].steering = false;
 
-	// REAR-RIGHT ------------------------
-	remolqueInfo.wheels[3].connection.Set(-half_width_remo + 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius);
-	remolqueInfo.wheels[3].direction = direction;
-	remolqueInfo.wheels[3].axis = axis;
-	remolqueInfo.wheels[3].suspensionRestLength = suspensionRestLength;
-	remolqueInfo.wheels[3].radius = wheel_radius;
-	remolqueInfo.wheels[3].width = wheel_width;
-	remolqueInfo.wheels[3].front = false;
-	remolqueInfo.wheels[3].drive = false;
-	remolqueInfo.wheels[3].brake = false;
-	remolqueInfo.wheels[3].steering = false;
+		// REAR-RIGHT ------------------------
+		trailerInfo.wheels[3].connection.Set(-half_width_remo + 0.3f * wheel_width, connection_height * 0.1 - 0.5, -half_length_remo + wheel_radius);
+		trailerInfo.wheels[3].direction = direction;
+		trailerInfo.wheels[3].axis = axis;
+		trailerInfo.wheels[3].suspensionRestLength = suspensionRestLength;
+		trailerInfo.wheels[3].radius = wheel_radius;
+		trailerInfo.wheels[3].width = wheel_width;
+		trailerInfo.wheels[3].front = false;
+		trailerInfo.wheels[3].drive = false;
+		trailerInfo.wheels[3].brake = false;
+		trailerInfo.wheels[3].steering = false;
 
-	remolque = App->physics->AddVehicle(remolqueInfo);
-	remolque->SetPos(0.0f, 1.5f, 5.0f);
-	remolque->collision_listeners.add(this);
-	remolque->GetBody()->setUserPointer(remolque);
+		remolque = App->physics->AddVehicle(trailerInfo);
+		remolque->SetPos(0.0f, 1.5f, 5.0f);
+		remolque->collision_listeners.add(this);
+		remolque->GetBody()->setUserPointer(remolque);
+	}
 
 	return ret;
 }
@@ -149,7 +158,7 @@ bool ModuleSceneIntro::Start()
 // Load assets
 bool ModuleSceneIntro::CleanUp()
 {
-	LOG("Unloading Intro scene");
+	LOG("Unloading Intro Scene");
 
 	return true;
 }
@@ -157,17 +166,19 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	// Draw the world floor
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.color = cFloor;
 	p.Render();
 
-
+	// Check debug mode
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		App->debug = !App->debug;
 	}
 
+	// Render all things
 	remolque->Render();
 	building.Render();
 	building1.Render();
@@ -195,3 +206,4 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		App->physics->world->addConstraint(cs);
 	}
 }
+

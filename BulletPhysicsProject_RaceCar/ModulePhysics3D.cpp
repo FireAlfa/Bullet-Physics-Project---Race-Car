@@ -124,6 +124,12 @@ update_status ModulePhysics3D::Update(float dt)
 			item = item->next;
 		}
 
+		p2List_item<PhysBody3D*>* buildingItem = buildings.getFirst();
+		while (buildingItem)
+		{
+			//buildingItem->data.
+		}
+
 		if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			Sphere s(1);
@@ -327,6 +333,32 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 	vehicles.add(pvehicle);
 
 	return pvehicle;
+}
+
+PhysBody3D* ModulePhysics3D::AddBuilding(const Cube& cube, float mass)
+{
+	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x * 0.5f, cube.size.y * 0.5f, cube.size.z * 0.5f));
+	shapes.add(colShape);
+
+	btTransform startTransform;
+	startTransform.setFromOpenGLMatrix(&cube.transform);
+
+	btVector3 localInertia(0, 0, 0);
+	if (mass != 0.f)
+		colShape->calculateLocalInertia(mass, localInertia);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+	motions.add(myMotionState);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
+
+	btRigidBody* body = new btRigidBody(rbInfo);
+	PhysBody3D* pbody = new PhysBody3D(body);
+
+	body->setUserPointer(pbody);
+	world->addRigidBody(body);
+	buildings.add(pbody);
+
+	return pbody;
 }
 
 // ---------------------------------------------------------
