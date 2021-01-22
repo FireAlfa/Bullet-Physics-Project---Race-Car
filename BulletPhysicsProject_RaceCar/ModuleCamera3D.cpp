@@ -101,7 +101,31 @@ update_status ModuleCamera3D::Update(float dt)
 			Position = Reference + Z * length(Position);
 		}
 	}
-	else
+	else if (App->player->map == true)
+	{
+		vec3 newPos(0, 0, 0);
+		float speed = 400.0f * dt;
+
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+			speed = 400.0f * dt;
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) newPos -= Z * speed*8;
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) newPos += Z * speed*8;
+
+
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) newPos -= X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) newPos += X * speed;
+
+		Position.x += newPos.x;
+		Position.z += newPos.z;
+		Position.y = 500;
+
+		Reference.x += newPos.x;
+		Reference.z += newPos.z;
+
+		LookAt(vec3(Reference));
+	}
+	else if (App->player->map == false)
 	{
 		btVector3 temp = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin();
 

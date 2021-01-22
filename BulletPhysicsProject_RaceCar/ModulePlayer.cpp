@@ -6,6 +6,7 @@
 #include "PhysBody3D.h"
 #include "ModuleSceneIntro.h"
 #include "Bullet/include/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
+#include "time.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
@@ -137,94 +138,97 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	turn = acceleration = 0;
-	brake = 2.5f;
-	if (engine == true)
+	if (map == false)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		turn = acceleration = 0;
+		brake = 2.5f;
+		if (engine == true)
 		{
-			switch (gearState)
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			{
-			case ModulePlayer::PARKING:
-				break;
-			case ModulePlayer::DRIVE:
-				//App->audio->PlayFx(engineAccelerationFx);
-				if (vehicle->GetKmh() < 90)
+				switch (gearState)
 				{
-					acceleration = MAX_ACCELERATION;
+				case ModulePlayer::PARKING:
+					break;
+				case ModulePlayer::DRIVE:
+					//App->audio->PlayFx(engineAccelerationFx);
+					if (vehicle->GetKmh() < 90)
+					{
+						acceleration = MAX_ACCELERATION;
+					}
+					break;
+				case ModulePlayer::REVERSE:
+					if (vehicle->GetKmh() > -20)
+					{
+						acceleration = -MAX_ACCELERATION;
+					}
+					break;
+				default:
+					break;
 				}
-				break;
-			case ModulePlayer::REVERSE:
-				if (vehicle->GetKmh() > -20)
+			}
+			else
+			{
+				//App->audio->PlayFx(engineStopFx);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			{
+				brake = BRAKE_POWER;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			{
+				if (turn < TURN_DEGREES)
+					turn += TURN_DEGREES;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			{
+				if (turn > -TURN_DEGREES)
+					turn -= TURN_DEGREES;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+			{
+				App->audio->PlayFx(gearFx);
+				switch (gearState)
 				{
-					acceleration = -MAX_ACCELERATION;
+				case ModulePlayer::PARKING:
+					gearState = DRIVE;
+					break;
+				case ModulePlayer::DRIVE:
+					gearState = REVERSE;
+					break;
+				case ModulePlayer::REVERSE:
+					gearState = PARKING;
+					break;
+				default:
+					break;
 				}
-				break;
-			default:
-				break;
 			}
 		}
-		else
-		{
-			//App->audio->PlayFx(engineStopFx);
-		}
 
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 		{
-			brake = BRAKE_POWER;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		{
-			if (turn < TURN_DEGREES)
-				turn += TURN_DEGREES;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		{
-			if (turn > -TURN_DEGREES)
-				turn -= TURN_DEGREES;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-		{
-			App->audio->PlayFx(gearFx);
-			switch (gearState)
+			if (engine != true)
 			{
-			case ModulePlayer::PARKING:
-				gearState = DRIVE;
-				break;
-			case ModulePlayer::DRIVE:
-				gearState = REVERSE;
-				break;
-			case ModulePlayer::REVERSE:
-				gearState = PARKING;
-				break;
-			default:
-				break;
+				App->audio->PlayFx(engineOnFx);
+				App->audio->ResumeFx();
+				engine = true;
+			}
+			else
+			{
+				App->audio->PauseFx();
+				App->audio->PlayFx(engineOffFx);
+				engine = false;
 			}
 		}
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-	{
-		if (engine != true)
-		{
-			App->audio->PlayFx(engineOnFx);
-			App->audio->ResumeFx();
-			engine = true;
-		}
-		else
-		{
-			App->audio->PauseFx();
-			App->audio->PlayFx(engineOffFx);
-			engine = false;
-		}
-	}
 
-	vehicle->ApplyEngineForce(acceleration);
-	vehicle->Turn(turn);
-	vehicle->Brake(brake);
+		vehicle->ApplyEngineForce(acceleration);
+		vehicle->Turn(turn);
+		vehicle->Brake(brake);
+	}
 
 	vehicle->Render();
 
@@ -250,4 +254,20 @@ update_status ModulePlayer::Update(float dt)
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::GenerateDeliveryPoint()
+{
+	srand(time(NULL));
+	int r = rand() % POINTS;
+
+	playerDeliveryPoint = App->scene_intro->deliveryPoints[r];
+}
+
+void ModulePlayer::GenerateCollectPoint()
+{
+	srand(time(NULL));
+	int r = rand() % POINTS;
+	
+	playerCollectPoint = App->scene_intro->deliveryPoints[r];
 }

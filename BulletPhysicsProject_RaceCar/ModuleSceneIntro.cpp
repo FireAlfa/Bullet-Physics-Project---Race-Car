@@ -22,6 +22,8 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	DefineDeliveryPoints();
+
 	//
 	// Create buildings
 	//
@@ -30,8 +32,6 @@ bool ModuleSceneIntro::Start()
 		CreateBuilding(80.0f, 5.0f, 180.0f, { 20, 5, 20 }, true);
 		CreateBuilding(80.0f, 5.0f, 280.0f, { 20, 5, 20 }, true);
 		CreateBuilding(80.0f, 5.0f, 380.0f, { 20, 5, 20 }, true);
-
-		//CreateBuilding(0.0f, 5.0f, -20.0f, { 20, 5, 20 }, true);
 
 		tree.color = cTree;
 		tree.SetPos(15, 0.25, 50);
@@ -138,6 +138,15 @@ bool ModuleSceneIntro::Start()
 	return ret;
 }
 
+void ModuleSceneIntro::DefineDeliveryPoints()
+{
+	//Every city point of deliver and collect defined
+	deliveryPoints.PushBack(&btVector3(0, 0, 0));
+	deliveryPoints.PushBack(&btVector3(0, 25, 10));
+	deliveryPoints.PushBack(&btVector3(0, 40, 0));
+
+}
+
 // Load assets
 bool ModuleSceneIntro::CleanUp()
 {
@@ -160,6 +169,10 @@ update_status ModuleSceneIntro::Update(float dt)
 	{
 		App->debug = !App->debug;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		App->player->map = !App->player->map;
+	}
 
 	// Render all things
 	p2List_item<Cube>* buildingItem = buildings.getFirst();
@@ -179,6 +192,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	if (body1 == remolque || body2 == remolque)
 	{
+		App->player->GenerateDeliveryPoint();
 		btTransform frameInA, frameInB;
 		frameInA = btTransform::getIdentity();
 		frameInA.setOrigin(btVector3(btScalar(App->player->vehicle->info.bridge_offset.x), btScalar(App->player->vehicle->info.bridge_offset.y + 1), btScalar(App->player->vehicle->info.bridge_offset.z - 1.5)));

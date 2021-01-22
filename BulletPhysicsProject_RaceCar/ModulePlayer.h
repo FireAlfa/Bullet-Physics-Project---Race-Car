@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "p2List.h"
 
 struct PhysVehicle3D;
 
@@ -20,6 +21,8 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	void GenerateDeliveryPoint();
+	void GenerateCollectPoint();
 
 	enum Gear
 	{
@@ -36,6 +39,10 @@ public:
 	float acceleration;
 	float brake;
 	bool engine = true;
+	bool map = false;
+
+	btVector3* playerDeliveryPoint = nullptr;
+	btVector3* playerCollectPoint = nullptr;
 
 	uint gearFx;
 	uint engineFx;

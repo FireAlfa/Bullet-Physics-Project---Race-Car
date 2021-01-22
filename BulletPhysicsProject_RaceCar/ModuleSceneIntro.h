@@ -3,12 +3,14 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 #include "Primitive.h"
+#include "p2List.h"
 
 #define MAX_SNAKE 2
 
 struct PhysBody3D;
 struct PhysMotor3D;
 struct PhysVehicle3D;
+class btVector3;
 
 class ModuleSceneIntro : public Module
 {
@@ -21,12 +23,18 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-
 	void CreateBuilding(float x, float y, float z, vec3 size, bool axis);
 
 public:
 	
 	p2List<Cube> buildings;
+
+	void DefineDeliveryPoints();
+
+public:
+	
+
+	p2DynArray<btVector3*> deliveryPoints;
 
 	Cylinder tree;
 	Cylinder tree1;
