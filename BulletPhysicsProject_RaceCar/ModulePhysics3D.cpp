@@ -127,7 +127,8 @@ update_status ModulePhysics3D::Update(float dt)
 		p2List_item<PhysBody3D*>* buildingItem = buildings.getFirst();
 		while (buildingItem)
 		{
-			//buildingItem->data.
+			buildingItem->data->cube.Render();
+			buildingItem = buildingItem->next;
 		}
 
 		if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
@@ -353,6 +354,8 @@ PhysBody3D* ModulePhysics3D::AddBuilding(const Cube& cube, float mass)
 
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
+
+	pbody->cube = cube;
 
 	body->setUserPointer(pbody);
 	world->addRigidBody(body);

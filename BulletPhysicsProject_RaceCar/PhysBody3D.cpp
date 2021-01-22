@@ -15,16 +15,6 @@ PhysBody3D::~PhysBody3D()
 
 
 // ---------------------------------------------------------
-void PhysBody3D::Render()
-{
-	//Cube building(bInfo.get;
-
-	//building.color = cBuilding;
-
-
-}
-
-// ---------------------------------------------------------
 void PhysBody3D::Push(float x, float y, float z)
 {
 	body->applyCentralImpulse(btVector3(x, y, z));

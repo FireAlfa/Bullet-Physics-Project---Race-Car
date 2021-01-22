@@ -22,16 +22,11 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	void CreateBuilding();
+	void CreateBuilding(float x, float y, float z, vec3 size, bool axis);
 
 public:
 	
-	p2List<Cube*> buildings;
-
-	Cube building;
-	Cube building1;
-	Cube building2;
-	Cube building3;
+	p2List<Cube> buildings;
 
 	Cylinder tree;
 	Cylinder tree1;

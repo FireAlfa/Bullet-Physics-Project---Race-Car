@@ -26,46 +26,29 @@ bool ModuleSceneIntro::Start()
 	// Create buildings
 	//
 	{
-		building.color = cBuilding;
-		building.SetPos(40, 30, 40);
-		building.size = { 20,60,20 };
-		building.axis = true;
-		App->physics->AddBody(building, 10000);
+		CreateBuilding(80.0f, 5.0f, 80.0f, { 20, 5, 20 }, true);
+		CreateBuilding(80.0f, 5.0f, 180.0f, { 20, 5, 20 }, true);
+		CreateBuilding(80.0f, 5.0f, 280.0f, { 20, 5, 20 }, true);
+		CreateBuilding(80.0f, 5.0f, 380.0f, { 20, 5, 20 }, true);
 
-		building1.color = cBuilding;
-		building1.SetPos(40, 30, 90);
-		building1.size = { 20,60,20 };
-		building1.axis = true;
-		App->physics->AddBody(building1, 10000);
+		//CreateBuilding(0.0f, 5.0f, -20.0f, { 20, 5, 20 }, true);
 
-		building2.color = cBuilding;
-		building2.SetPos(40, 30, 140);
-		building2.size = { 20,60,20 };
-		building2.axis = true;
-		App->physics->AddBody(building2, 10000);
+		tree.color = cTree;
+		tree.SetPos(15, 0.25, 50);
+		tree.SetRotation(90, vec3(0, 0, 1));
+		tree.radius = 0.5;
+		tree.height = 10;
+		tree.axis = true;
+		App->physics->AddBody(tree, 10000);
 
-		building3.color = cBuilding;
-		building3.SetPos(40, 30, 190);
-		building3.size = { 20,60,20 };
-		building3.axis = true;
-		App->physics->AddBody(building3, 10000);
-
-	tree.color = cTree;
-	tree.SetPos(15, 0.25, 50);
-	tree.SetRotation(90, vec3(0, 0, 1));
-	tree.radius = 0.5;
-	tree.height = 10;
-	tree.axis = true;
-	App->physics->AddBody(tree, 10000);
-
-	tree1.color = cTree;
-	tree1.SetPos(15, 0.25, 100);
-	tree1.SetRotation(90, vec3(0, 0, 1));
-	tree1.radius = 0.5;
-	tree1.height = 10;
-	tree1.axis = true;
-	App->physics->AddBody(tree, 10000);
-
+		tree1.color = cTree;
+		tree1.SetPos(15, 0.25, 100);
+		tree1.SetRotation(90, vec3(0, 0, 1));
+		tree1.radius = 0.5;
+		tree1.height = 10;
+		tree1.axis = true;
+		App->physics->AddBody(tree, 10000);
+	}
 	//
 	// Create trailer
 	//
@@ -179,11 +162,13 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 	// Render all things
+	p2List_item<Cube>* buildingItem = buildings.getFirst();
+	while (buildingItem)
+	{
+		buildingItem->data.Render();
+		buildingItem = buildingItem->next;
+	}
 	remolque->Render();
-	building.Render();
-	building1.Render();
-	building2.Render();
-	building3.Render();
 	tree.Render();
 	tree1.Render();
 
@@ -207,3 +192,14 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 }
 
+void ModuleSceneIntro::CreateBuilding(float x, float y, float z, vec3 size, bool axis)
+{
+	Cube cube;
+	cube.color = cBuilding;
+	cube.SetPos(x/2.0f, y/2.0f, z/2.0f);
+	cube.size = size;
+	cube.axis = axis;
+	buildings.add(cube);
+
+	App->physics->AddBuilding(cube, 10000);
+}

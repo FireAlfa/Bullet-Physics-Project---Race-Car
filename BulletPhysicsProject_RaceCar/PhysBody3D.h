@@ -2,11 +2,11 @@
 #define __PhysBody3D_H__
 
 #include "p2List.h"
+#include "Primitive.h"
 #include "glmath.h"
 
 class btRigidBody;
 class Module;
-
 
 // =================================================
 struct BuildingInfo
@@ -24,7 +24,6 @@ public:
 	PhysBody3D(btRigidBody* body);
 	~PhysBody3D();
 
-	void Render();
 	void Push(float x, float y, float z);
 	void GetTransform(float* matrix) const;
 	void SetTransform(const float* matrix) const;
@@ -37,7 +36,7 @@ private:
 
 public:
 
-	BuildingInfo bInfo;
+	Cube cube;
 	p2List<Module*> collision_listeners;
 };
 
