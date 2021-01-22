@@ -91,21 +91,92 @@ bool ModuleSceneIntro::Start()
 		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 0.2f, TILE_SIZE + (7 * TILE_SIZE / 2), { 5 * TILE_SIZE, 0.2f, 7 * TILE_SIZE }, true, Green);
 		CreateBuilding(-6 * TILE_SIZE - (7 * TILE_SIZE / 2), 0.2f, -7 * TILE_SIZE + (4 * TILE_SIZE / 2), { 7 * TILE_SIZE, 0.2f, 4 * TILE_SIZE }, true, Green);
 
-		/*tree.color = cTree;
-		tree.SetPos(15, 0.25, 50);
+		// Park 1
+		tree.color = cTree;
+		tree.SetPos(8 * TILE_SIZE + TILE_SIZE / 2, 2.7f, 7 * TILE_SIZE + TILE_SIZE / 2);
 		tree.SetRotation(90, vec3(0, 0, 1));
 		tree.radius = 0.5;
-		tree.height = 10;
+		tree.height = 5;
 		tree.axis = true;
-		App->physics->AddBody(tree, 10000);*/
+		App->physics->AddBody(tree, 10000);
 
-		/*tree1.color = cTree;
-		tree1.SetPos(15, 0.25, 100);
+		leaf.color = cLeaf;
+		leaf.SetPos(8 * TILE_SIZE + TILE_SIZE / 2, 6.0f, 7 * TILE_SIZE + TILE_SIZE / 2);
+		leaf.SetRotation(90, vec3(0, 0, 1));
+		leaf.radius = 3;
+		leaf.axis = true;
+
+		tree1.color = cTree;
+		tree1.SetPos(4 * TILE_SIZE + TILE_SIZE / 2, 2.7f, 3 * TILE_SIZE + TILE_SIZE / 2);
 		tree1.SetRotation(90, vec3(0, 0, 1));
 		tree1.radius = 0.5;
-		tree1.height = 10;
+		tree1.height = 5;
 		tree1.axis = true;
-		App->physics->AddBody(tree, 10000);*/
+		App->physics->AddBody(tree1, 10000);
+
+		leaf1.color = cLeaf;
+		leaf1.SetPos(4 * TILE_SIZE + TILE_SIZE / 2, 6.0f, 3 * TILE_SIZE + TILE_SIZE / 2);
+		leaf1.SetRotation(90, vec3(0, 0, 1));
+		leaf1.radius = 3;
+		leaf1.axis = true;
+
+		tree2.color = cTree;
+		tree2.SetPos(8 * TILE_SIZE + TILE_SIZE / 2, 2.7f, 2 * TILE_SIZE + TILE_SIZE / 2);
+		tree2.SetRotation(90, vec3(0, 0, 1));
+		tree2.radius = 0.5;
+		tree2.height = 5;
+		tree2.axis = true;
+		App->physics->AddBody(tree1, 10000);
+
+		leaf2.color = cLeaf;
+		leaf2.SetPos(8 * TILE_SIZE + TILE_SIZE / 2, 6.0f, 2 * TILE_SIZE + TILE_SIZE / 2);
+		leaf2.SetRotation(90, vec3(0, 0, 1));
+		leaf2.radius = 3;
+		leaf2.axis = true;
+
+		// Park 2
+
+		tree3.color = cTree;
+		tree3.SetPos(-10 * TILE_SIZE + TILE_SIZE / 2, 2.7f, -5 * TILE_SIZE + TILE_SIZE / 2);
+		tree3.SetRotation(90, vec3(0, 0, 1));
+		tree3.radius = 0.5;
+		tree3.height = 5;
+		tree3.axis = true;
+		App->physics->AddBody(tree3, 10000);
+
+		leaf3.color = cLeaf;
+		leaf3.SetPos(-10 * TILE_SIZE + TILE_SIZE / 2, 6.0f, -5 * TILE_SIZE + TILE_SIZE / 2);
+		leaf3.SetRotation(90, vec3(0, 0, 1));
+		leaf3.radius = 3;
+		leaf3.axis = true;
+
+		tree4.color = cTree;
+		tree4.SetPos(-7 * TILE_SIZE + TILE_SIZE / 2, 2.7f, -6 * TILE_SIZE + TILE_SIZE / 2);
+		tree4.SetRotation(90, vec3(0, 0, 1));
+		tree4.radius = 0.5;
+		tree4.height = 5;
+		tree4.axis = true;
+		App->physics->AddBody(tree4, 10000);
+
+		leaf4.color = cLeaf;
+		leaf4.SetPos(-7 * TILE_SIZE + TILE_SIZE / 2, 6.0f, -6 * TILE_SIZE + TILE_SIZE / 2);
+		leaf4.SetRotation(90, vec3(0, 0, 1));
+		leaf4.radius = 3;
+		leaf4.axis = true;
+
+		tree5.color = cTree;
+		tree5.SetPos(-12 * TILE_SIZE + TILE_SIZE / 2, 2.7f, -7 * TILE_SIZE + TILE_SIZE / 2);
+		tree5.SetRotation(90, vec3(0, 0, 1));
+		tree5.radius = 0.5;
+		tree5.height = 5;
+		tree5.axis = true;
+		App->physics->AddBody(tree5, 10000);
+
+		leaf5.color = cLeaf;
+		leaf5.SetPos(-12 * TILE_SIZE + TILE_SIZE / 2, 6.0f, -7 * TILE_SIZE + TILE_SIZE / 2);
+		leaf5.SetRotation(90, vec3(0, 0, 1));
+		leaf5.radius = 3;
+		leaf5.axis = true;
 	}
 
 
@@ -271,8 +342,18 @@ update_status ModuleSceneIntro::Update(float dt)
 	{
 		deliverySensor->cube.Render();
 	}
-	/*tree.Render();
-	tree1.Render();*/
+	tree.Render();
+	leaf.Render();
+	tree1.Render();
+	leaf1.Render();
+	tree2.Render();
+	leaf2.Render();
+	tree3.Render();
+	leaf3.Render();
+	tree4.Render();
+	leaf4.Render();
+	tree5.Render();
+	leaf5.Render();
 
 	return UPDATE_CONTINUE;
 }

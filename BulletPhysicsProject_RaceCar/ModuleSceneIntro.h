@@ -43,7 +43,18 @@ public:
 	btGeneric6DofConstraint* cs;
 
 	Cylinder tree;
+	Sphere leaf;
 	Cylinder tree1;
+	Sphere leaf1;
+	Cylinder tree2;
+	Sphere leaf2;
+	Cylinder tree3;
+	Sphere leaf3;
+	Cylinder tree4;
+	Sphere leaf4;
+	Cylinder tree5;
+	Sphere leaf5;
+
 	PhysBody3D* deliverySensor = nullptr;
 	bool isJoint = false;
 
