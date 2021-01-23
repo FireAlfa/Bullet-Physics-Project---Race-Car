@@ -62,4 +62,5 @@ public:
 	uint engineStopFx;
 	uint lockFx;
 	uint deliveryFx;
+	uint reverseFx;
 };
