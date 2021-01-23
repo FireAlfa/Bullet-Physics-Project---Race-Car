@@ -31,7 +31,7 @@ bool ModulePlayer::Start()
 	engineStopFx = App->audio->LoadFx("Assets/FX/truck_stop.wav");
 	lockFx = App->audio->LoadFx("Assets/FX/truck_lock.wav");
 	deliveryFx = App->audio->LoadFx("Assets/FX/delivery.wav");
-	radioFx = App->audio->LoadFx("Assets/FX/radio.wav");
+	App->audio->PlayMusic("Assets/FX/radio.wav");
 
 	//Play stop engine sound
 	App->audio->PlayFx(engineOnFx);
@@ -220,12 +220,17 @@ update_status ModulePlayer::Update(float dt)
 			{
 				App->audio->PlayFx(engineOnFx);
 				App->audio->ResumeFx();
+				if (radio == true)
+				{
+					Mix_ResumeMusic();
+				}
 				engine = true;
 			}
 			else
 			{
 				App->audio->PauseFx();
 				App->audio->PlayFx(engineOffFx);
+				Mix_PauseMusic();
 				engine = false;
 			}
 		}
@@ -234,13 +239,12 @@ update_status ModulePlayer::Update(float dt)
 		{
 			if (radio != true && engine)
 			{
-				App->audio->PlayFx(radioFx);
+				Mix_ResumeMusic();
 				radio = true;
 			}
 			else
 			{
-				App->audio->PauseFx();
-				App->audio->PlayFx(engineFx);
+				Mix_PauseMusic();
 				radio = false;
 			}
 		}

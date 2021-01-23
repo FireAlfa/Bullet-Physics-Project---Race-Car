@@ -41,7 +41,7 @@ public:
 	bool engine = true;
 	bool map = false;
 	bool hitched = false;
-	bool radio = false;
+	bool radio = true;
 
 	btVector3* playerDeliveryPoint = nullptr;
 	btVector3* playerCollectPoint = nullptr;
@@ -55,5 +55,4 @@ public:
 	uint engineStopFx;
 	uint lockFx;
 	uint deliveryFx;
-	uint radioFx;
 };
