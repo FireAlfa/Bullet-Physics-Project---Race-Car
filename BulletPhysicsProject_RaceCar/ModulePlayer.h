@@ -24,6 +24,8 @@ public:
 	void GenerateDeliveryPoint();
 	void GenerateCollectPoint();
 
+	void SetInitPos();
+
 	enum Gear
 	{
 		PARKING = 0,

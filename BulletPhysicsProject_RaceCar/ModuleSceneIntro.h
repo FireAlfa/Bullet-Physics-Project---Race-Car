@@ -30,6 +30,8 @@ public:
 
 	void SetTrailerPos(float x, float y, float z, int id);
 
+	void LooseCondition();
+
 	void DefineDeliveryPoints();
 	void CreateDeliverySensor();
 

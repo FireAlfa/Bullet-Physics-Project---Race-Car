@@ -498,6 +498,10 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			}
 		}
 	}
+	if (((body1 == remolque && body2 != App->player->vehicle) || (body2 == remolque && body1 != App->player->vehicle)))
+	{
+		LooseCondition();
+	}
 }
 
 void ModuleSceneIntro::CreateBuilding(float x, float y, float z, vec3 size, bool axis, Color color)
@@ -510,4 +514,24 @@ void ModuleSceneIntro::CreateBuilding(float x, float y, float z, vec3 size, bool
 	buildings.add(cube);
 
 	App->physics->AddBuilding(cube, 10000);
+}
+
+void ModuleSceneIntro::LooseCondition()
+{
+	if (cs != nullptr)
+	{
+		for (p2List_item<btTypedConstraint*>* item = App->physics->constraints.getFirst(); item; item = item->next)
+		{
+			App->physics->world->removeConstraint(item->data);
+			delete item->data;
+		}
+		App->physics->constraints.clear();
+
+		isJoint = false;
+		App->player->wasDelivered = false;
+		App->player->GenerateCollectPoint();
+		App->scene_intro->SetTrailerPos(App->player->playerCollectPoint->getX(), 1.5f, App->player->playerCollectPoint->getZ(), App->player->firstPos);
+		App->player->SetInitPos();
+		cs = nullptr;
+	}
 }

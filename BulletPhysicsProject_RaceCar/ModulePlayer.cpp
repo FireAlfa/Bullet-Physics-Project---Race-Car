@@ -381,3 +381,11 @@ void ModulePlayer::GenerateCollectPoint()
 		App->scene_intro->SetTrailerPos(playerCollectPoint->getX(), 1.5f, playerCollectPoint->getZ(), r);
 	}
 }
+
+void ModulePlayer::SetInitPos()
+{
+	vehicle->GetBody()->setLinearVelocity({ 0,0,0 });
+	vehicle->GetBody()->setAngularVelocity({ 0,0,0 });
+	vehicle->SetTransform((0, 0, 0, 0));
+	vehicle->SetPos(0.0f - 2.0f, 1.5f, 14.0f);
+}
