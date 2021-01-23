@@ -232,7 +232,7 @@ void ModuleSceneIntro::CreateTrailer(float x, float y, float z)
 		trailerInfo.chassis_size.Set(2.5f, 3, 9.f);
 		trailerInfo.chassis_offset.Set(0, 0, 0);
 
-		trailerInfo.mass = 100.0f;
+		trailerInfo.mass = 250.0f;
 		trailerInfo.suspensionStiffness = 15.88f;
 		trailerInfo.suspensionCompression = 0.83f;
 		trailerInfo.suspensionDamping = 0.88f;

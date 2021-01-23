@@ -45,7 +45,7 @@ bool ModulePlayer::Start()
 	car.bridge_size.Set(2.5f, 0.7f, 3.f);
 	car.bridge_offset.Set(0.0f, 0.37f, -2.5f);
 
-	car.mass = 500.0f;
+	car.mass = 300.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
@@ -274,9 +274,9 @@ update_status ModulePlayer::Update(float dt)
 			}
 		}
 
-		vehicle->ApplyEngineForce(acceleration);
+		vehicle->ApplyEngineForce(acceleration * dt * 35);
 		vehicle->Turn(turn);
-		vehicle->Brake(brake);
+		vehicle->Brake(brake * dt * 35);
 	}
 
 	vehicle->Render();
