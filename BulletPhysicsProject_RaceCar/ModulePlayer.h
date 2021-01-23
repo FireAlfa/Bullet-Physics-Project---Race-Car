@@ -43,6 +43,9 @@ public:
 	bool hitched = false;
 	bool radio = true;
 
+	bool isAccel = false;
+	bool isDesaccel = true;
+
 	btVector3* playerDeliveryPoint = nullptr;
 	btVector3* playerCollectPoint = nullptr;
 

@@ -34,8 +34,8 @@ bool ModulePlayer::Start()
 	App->audio->PlayMusic("Assets/FX/radio.wav");
 
 	//Play stop engine sound
-	App->audio->PlayFx(engineOnFx);
-	App->audio->PlayFx(engineFx, -1);
+	App->audio->PlayFx(1, engineOnFx);
+	App->audio->PlayFx(0, engineFx, -1);
 
 	VehicleInfo car;
 
@@ -156,7 +156,20 @@ update_status ModulePlayer::Update(float dt)
 				case ModulePlayer::PARKING:
 					break;
 				case ModulePlayer::DRIVE:
-					//App->audio->PlayFx(engineAccelerationFx);
+					if (Mix_Paused(3) == 0)
+					{
+						App->audio->PauseFx(3);
+					}
+					if (Mix_Paused(2) == 1)
+					{
+						App->audio->ResumeFx(2);
+					}
+					if (isAccel != true)
+					{
+						App->audio->PlayFx(2, engineAccelerationFx, -1);
+						isAccel = true;
+						isDesaccel = false;
+					}
 					if (vehicle->GetKmh() < 90)
 					{
 						acceleration = MAX_ACCELERATION;
@@ -174,7 +187,19 @@ update_status ModulePlayer::Update(float dt)
 			}
 			else
 			{
-				//App->audio->PlayFx(engineStopFx);
+				if (Mix_Paused(2) == 0)
+				{
+					App->audio->PauseFx(2);
+				}
+				if (Mix_Paused(3) == 1)
+				{
+					App->audio->ResumeFx(3);
+				}
+				if (isDesaccel != true && vehicle->GetKmh() > 5)
+				{
+					App->audio->PlayFx(3, engineStopFx, -1);
+					isDesaccel = true;
+				}
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
@@ -196,7 +221,7 @@ update_status ModulePlayer::Update(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 			{
-				App->audio->PlayFx(gearFx);
+				App->audio->PlayFx(1, gearFx);
 				switch (gearState)
 				{
 				case ModulePlayer::PARKING:
@@ -218,8 +243,8 @@ update_status ModulePlayer::Update(float dt)
 		{
 			if (engine != true)
 			{
-				App->audio->PlayFx(engineOnFx);
-				App->audio->ResumeFx();
+				App->audio->PlayFx(1, engineOnFx);
+				App->audio->ResumeFx(0);
 				if (radio == true)
 				{
 					Mix_ResumeMusic();
@@ -228,16 +253,16 @@ update_status ModulePlayer::Update(float dt)
 			}
 			else
 			{
-				App->audio->PauseFx();
-				App->audio->PlayFx(engineOffFx);
+				App->audio->PauseFx(1);
+				App->audio->PlayFx(0, engineOffFx);
 				Mix_PauseMusic();
 				engine = false;
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && engine == true)
 		{
-			if (radio != true && engine)
+			if (radio != true)
 			{
 				Mix_ResumeMusic();
 				radio = true;
@@ -286,7 +311,6 @@ void ModulePlayer::GenerateDeliveryPoint()
 	int r = rand() % App->scene_intro->deliveryPoints.Count();
 
 	playerDeliveryPoint = App->scene_intro->deliveryPoints.At(r);
-	App->scene_intro->CreateDeliverySensor(playerDeliveryPoint->getX(), playerDeliveryPoint->getY(), playerDeliveryPoint->getZ());
 }
 
 void ModulePlayer::GenerateCollectPoint()

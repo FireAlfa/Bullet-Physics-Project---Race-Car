@@ -96,7 +96,7 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 					item = item->next;
 					if (App->player->hitched == false)
 					{
-						App->audio->PlayFx(App->player->lockFx);
+						//App->audio->PlayFx(App->player->lockFx);
 						App->player->hitched = true;
 					}
 				}
@@ -108,7 +108,7 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 					item = item->next;
 					if (App->player->hitched == false)
 					{
-						App->audio->PlayFx(App->player->lockFx);
+						//App->audio->PlayFx(App->player->lockFx);
 						App->player->hitched = true;
 					}
 				}

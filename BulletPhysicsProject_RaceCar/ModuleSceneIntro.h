@@ -29,7 +29,7 @@ public:
 	void CreateTrailer(float x, float y, float z);
 
 	void DefineDeliveryPoints();
-	void CreateDeliverySensor(float x, float y, float z);
+	void CreateDeliverySensor();
 
 public:
 	
@@ -55,7 +55,7 @@ public:
 	Cylinder tree5;
 	Sphere leaf5;
 
-	PhysBody3D* deliverySensor = nullptr;
+	p2DynArray<PhysBody3D*> deliverySensor;
 	bool isJoint = false;
 
 	PhysVehicle3D* remolque;

@@ -23,6 +23,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	DefineDeliveryPoints();
+	CreateDeliverySensor();
 
 	//
 	// Create buildings
@@ -197,21 +198,29 @@ void ModuleSceneIntro::DefineDeliveryPoints()
 	//Every city point of deliver and collect defined
 	deliveryPoints.PushBack(btVector3(-7 * TILE_SIZE, 0, 4 * TILE_SIZE));
 	deliveryPoints.PushBack(btVector3(-4*TILE_SIZE, 0, TILE_SIZE*11));
-	deliveryPoints.PushBack(btVector3(4*TILE_SIZE, 0, 5*TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(4*TILE_SIZE, 0, 11*TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE, 0, 1 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE, 0, TILE_SIZE * 10));
+	deliveryPoints.PushBack(btVector3(-16 * TILE_SIZE, 0, 14 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(1 * TILE_SIZE, 0, -10 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(-9 * TILE_SIZE, 0, TILE_SIZE * -10));
 
 }
 
-void ModuleSceneIntro::CreateDeliverySensor(float x, float y, float z)
+void ModuleSceneIntro::CreateDeliverySensor()
 {
-	Cube cubeSensor;
-	cubeSensor.color = Blue;
-	cubeSensor.SetPos( x - 3.5, y + 2.5, z + 3.5);
-	cubeSensor.size = vec3(7,5,7);
-	cubeSensor.axis = true;
+	for (int i = 0; i < deliveryPoints.Count(); i++)
+	{
+		Cube cubeSensor;
+		cubeSensor.color = Blue;
+		cubeSensor.SetPos(deliveryPoints[i].getX() - 3.5, deliveryPoints[i].getY() + 2.5, deliveryPoints[i].getZ() + 3.5);
+		cubeSensor.size = vec3(7, 5, 7);
+		cubeSensor.axis = true;
 
-	deliverySensor = App->physics->AddBuilding(cubeSensor, 10000);
-	deliverySensor->collision_listeners.add(this);
-	deliverySensor->GetBody()->setUserPointer(deliverySensor);
+		deliverySensor.PushBack(App->physics->AddBuilding(cubeSensor, 10000));
+		deliverySensor[i]->collision_listeners.add(this);
+		deliverySensor[i]->GetBody()->setUserPointer(deliverySensor[i]);
+	}
 }
 
 void ModuleSceneIntro::CreateTrailer(float x, float y, float z)
@@ -338,9 +347,12 @@ update_status ModuleSceneIntro::Update(float dt)
 	{
 		remolque->Render();
 	}
-	if (deliverySensor != nullptr)
+	for (int i = 0; i < deliverySensor.Count(); i++)
 	{
-		deliverySensor->cube.Render();
+		if (deliverySensor[i] != nullptr)
+		{
+			deliverySensor[i]->cube.Render();
+		}
 	}
 	tree.Render();
 	leaf.Render();
@@ -375,7 +387,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		App->physics->world->addConstraint(cs);
 		isJoint = true;
 	}
-	if ((body1 == deliverySensor && body2 == App->player->vehicle) || (body2 == deliverySensor && body1 == App->player->vehicle))
+	/*if ((body1 == deliverySensor && body2 == App->player->vehicle) || (body2 == deliverySensor && body1 == App->player->vehicle))
 	{
 		if (cs != nullptr)
 		{
@@ -390,7 +402,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			remolque = nullptr;
 			App->player->GenerateCollectPoint();
 		}
-	}
+	}*/
 }
 
 void ModuleSceneIntro::CreateBuilding(float x, float y, float z, vec3 size, bool axis, Color color)
