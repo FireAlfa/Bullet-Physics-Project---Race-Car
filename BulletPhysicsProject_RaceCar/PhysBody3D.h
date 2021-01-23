@@ -43,6 +43,7 @@ public:
 
 	Cube cube;
 	p2List<Module*> collision_listeners;
+	bool isDeliver = false;
 };
 
 #endif // __PhysBody3D_H__

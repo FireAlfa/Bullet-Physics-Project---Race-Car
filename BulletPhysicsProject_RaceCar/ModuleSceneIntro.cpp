@@ -184,16 +184,14 @@ bool ModuleSceneIntro::Start()
 void ModuleSceneIntro::DefineDeliveryPoints()
 {
 	//Every city point of deliver and collect defined
-	deliveryPoints.PushBack(btVector3(-9 * TILE_SIZE, 0, TILE_SIZE * -10));
-	deliveryPoints.PushBack(btVector3(-7 * TILE_SIZE - 4, 0, 4 * TILE_SIZE));
-	deliveryPoints.PushBack(btVector3(-4 * TILE_SIZE, 0, TILE_SIZE * 11 + 4));
-	deliveryPoints.PushBack(btVector3(-16 * TILE_SIZE + 4, 0, 14 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE + 10, 0, TILE_SIZE * 10 - 7));
 	deliveryPoints.PushBack(btVector3(4 * TILE_SIZE, 0, 11 * TILE_SIZE + 5));
-	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE, 0, 1 * TILE_SIZE));
-	deliveryPoints.PushBack(btVector3(1 * TILE_SIZE, 0, -10 * TILE_SIZE));
-	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE + 10, 0, TILE_SIZE * 10 -7));
-
-
+	deliveryPoints.PushBack(btVector3(-4 * TILE_SIZE, 0, TILE_SIZE * 11 + 4));
+	deliveryPoints.PushBack(btVector3(-16 * TILE_SIZE + 4, 0, 14 * TILE_SIZE + 10));
+	deliveryPoints.PushBack(btVector3(-7 * TILE_SIZE - 4, 0, 4 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE + 10, 0, 1 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(1 * TILE_SIZE - 0.1, 0, -10 * TILE_SIZE - 30));
+	deliveryPoints.PushBack(btVector3(-9 * TILE_SIZE - 25, 0, TILE_SIZE * -10 + 1));
 }
 
 void ModuleSceneIntro::CreateDeliverySensor()
@@ -206,12 +204,13 @@ void ModuleSceneIntro::CreateDeliverySensor()
 		cubeSensor.size = vec3(7, 5, 7);
 
 		deliverySensor.PushBack(App->physics->AddBuilding(cubeSensor, 10000));
-		deliverySensor[i]->collision_listeners.add(this);
-		deliverySensor[i]->GetBody()->setUserPointer(deliverySensor[i]);
+		PhysBody3D* auxBody = *deliverySensor.At(i);
+		auxBody->collision_listeners.add(this);
+		auxBody->GetBody()->setUserPointer(auxBody);
 	}
 }
 
-void ModuleSceneIntro::CreateTrailer(float x, float y, float z)
+void ModuleSceneIntro::CreateTrailer(float x, float y, float z, int id)
 {
 	{
 		VehicleInfo trailerInfo;
@@ -293,7 +292,69 @@ void ModuleSceneIntro::CreateTrailer(float x, float y, float z)
 		trailerInfo.color = cTrailer;
 
 		remolque = App->physics->AddVehicle(trailerInfo);
-		remolque->SetPos(x, y, z);
+		btTransform tr;
+		btQuaternion quat;
+		switch (id)
+		{
+		case 0:
+			tr.setIdentity();
+			quat.setRotation(btVector3(0, 1, 0), 80);
+			tr.setRotation(quat);
+			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->SetPos(x - 13, y, z);
+			break;
+		case 1:
+			tr.setIdentity();
+			quat.setRotation(btVector3(0, 1, 0), 110);
+			tr.setRotation(quat);
+			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->SetPos(x - 4, y, z - 5);
+			break;
+		case 2:
+			tr.setIdentity();
+			quat.setRotation(btVector3(0, 1, 0), 110);
+			tr.setRotation(quat);
+			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->SetPos(x - 4, y, z - 5);
+			break;
+		case 3:
+			tr.setIdentity();
+			quat.setRotation(btVector3(0, 1, 0), 110);
+			tr.setRotation(quat);
+			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->SetPos(x - 3, y, z - 5);
+			break;
+		case 4:
+			tr.setIdentity();
+			quat.setRotation(btVector3(0, 1, 0), -80);
+			tr.setRotation(quat);
+			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->SetPos(x + 8, y, z + 4);
+			break;
+		case 5:
+			tr.setIdentity();
+			quat.setRotation(btVector3(0, 1, 0), 80);
+			tr.setRotation(quat);
+			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->SetPos(x - 13, y, z + 4);
+			break;
+		case 6:
+			tr.setIdentity();
+			quat.setRotation(btVector3(0, 1, 0), 220);
+			tr.setRotation(quat);
+			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->SetPos(x - 4, y, z + 14);
+			break;
+		case 7:
+			tr.setIdentity();
+			quat.setRotation(btVector3(0, 1, 0), -80);
+			tr.setRotation(quat);
+			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->SetPos(x + 8, y, z + 4);
+			break;
+		default:
+			break;
+		}
 		remolque->collision_listeners.add(this);
 		remolque->GetBody()->setUserPointer(remolque);
 	}
@@ -336,11 +397,13 @@ update_status ModuleSceneIntro::Update(float dt)
 	{
 		remolque->Render();
 	}
+	PhysBody3D* auxBody;
 	for (int i = 0; i < deliverySensor.Count(); i++)
 	{
-		if (deliverySensor[i] != nullptr)
+		auxBody = *deliverySensor.At(i);
+		if (auxBody != nullptr)
 		{
-			deliverySensor[i]->cube.Render();
+			auxBody->cube.Render();
 		}
 	}
 	tree.Render();
@@ -376,22 +439,32 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		App->physics->world->addConstraint(cs);
 		isJoint = true;
 	}
-	/*if ((body1 == deliverySensor && body2 == App->player->vehicle) || (body2 == deliverySensor && body1 == App->player->vehicle))
+	PhysBody3D* auxBody;
+	for (int i = 0; i < deliverySensor.Count(); i++)
 	{
-		if (cs != nullptr)
+		auxBody = *deliverySensor.At(i);
+		if ((body1 == auxBody && auxBody->isDeliver == true && body2 == App->player->vehicle) || (body2 == auxBody && auxBody->isDeliver == true && body1 == App->player->vehicle))
 		{
-			App->physics->world->removeConstraint(cs);
-			cs = nullptr;
+			if (cs != nullptr)
+			{
+				int id = cs->getUserConstraintId();
+				btTypedConstraint* constraint = remolque->GetBody()->getConstraintRef(id);
+				App->physics->world->removeConstraint(constraint);
+				delete constraint;
+				cs = nullptr;
+			}
+			if (remolque != nullptr)
+			{
+				btRigidBody* body = remolque->GetBody();
+				App->physics->vehicles.del(App->physics->vehicles.findNode(remolque));
+				delete body->getMotionState();
+				App->physics->world->removeRigidBody(remolque->GetBody());
+				btCollisionShape* obj = remolque->GetBody()->getCollisionShape();
+				delete obj;
+				remolque = nullptr;
+			}
 		}
-		if (remolque != nullptr)
-		{
-			App->physics->vehicles.del(App->physics->vehicles.findNode(remolque));
-			App->physics->world->removeVehicle(remolque->vehicle);
-			App->physics->world->removeRigidBody(remolque->GetBody());
-			remolque = nullptr;
-			App->player->GenerateCollectPoint();
-		}
-	}*/
+	}
 }
 
 void ModuleSceneIntro::CreateBuilding(float x, float y, float z, vec3 size, bool axis, Color color)

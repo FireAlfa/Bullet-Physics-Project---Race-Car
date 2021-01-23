@@ -26,7 +26,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void CreateBuilding(float x, float y, float z, vec3 size, bool axis, Color color = cBuilding);
-	void CreateTrailer(float x, float y, float z);
+	void CreateTrailer(float x, float y, float z, int id);
 
 	void DefineDeliveryPoints();
 	void CreateDeliverySensor();

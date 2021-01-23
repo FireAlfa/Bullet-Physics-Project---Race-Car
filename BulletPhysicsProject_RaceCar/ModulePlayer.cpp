@@ -312,7 +312,31 @@ void ModulePlayer::GenerateDeliveryPoint()
 	srand(time(NULL));
 	int r = rand() % App->scene_intro->deliveryPoints.Count();
 
-	playerDeliveryPoint = App->scene_intro->deliveryPoints.At(r);
+	if (App->scene_intro->deliveryPoints.At(r) == playerCollectPoint)
+	{
+		if (r == 0)
+		{
+			playerDeliveryPoint = App->scene_intro->deliveryPoints.At(r + 1);
+		}
+		else if (r == 7)
+		{
+			playerDeliveryPoint = App->scene_intro->deliveryPoints.At(r - 1);
+		}
+	}
+	else
+	{
+		playerDeliveryPoint = App->scene_intro->deliveryPoints.At(r);
+	}
+	PhysBody3D* auxBody;
+	for (int i = 0; i < App->scene_intro->deliveryPoints.Count(); i++)
+	{
+		if (App->scene_intro->deliveryPoints.At(i) == playerDeliveryPoint)
+		{
+			auxBody = *App->scene_intro->deliverySensor.At(i);
+			auxBody->cube.color = Yellow;
+			auxBody->isDeliver = true;
+		}
+	}
 }
 
 void ModulePlayer::GenerateCollectPoint()
@@ -320,6 +344,6 @@ void ModulePlayer::GenerateCollectPoint()
 	srand(time(NULL));
 	int r = rand() % App->scene_intro->deliveryPoints.Count();
 	
-	playerCollectPoint = App->scene_intro->deliveryPoints.At(r);
-	App->scene_intro->CreateTrailer(playerCollectPoint->getX(), 1.5f, playerCollectPoint->getZ());
+	playerCollectPoint = App->scene_intro->deliveryPoints.At(7);
+	App->scene_intro->CreateTrailer(playerCollectPoint->getX(), 1.5f, playerCollectPoint->getZ(), 7);
 }
