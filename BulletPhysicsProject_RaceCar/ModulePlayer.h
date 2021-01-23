@@ -40,7 +40,6 @@ public:
 	float brake;
 	bool engine = true;
 	bool map = false;
-	bool hitched = false;
 	bool radio = true;
 
 	bool isAccel = false;
@@ -48,6 +47,9 @@ public:
 
 	btVector3* playerDeliveryPoint = nullptr;
 	btVector3* playerCollectPoint = nullptr;
+
+	int firstPos;
+	bool wasDelivered = false;
 
 	uint gearFx;
 	uint engineFx;

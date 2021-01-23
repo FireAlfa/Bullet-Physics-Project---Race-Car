@@ -40,6 +40,10 @@ public:
 
 	btDiscreteDynamicsWorld* world;
 	p2List<PhysVehicle3D*> vehicles;
+	p2List<btTypedConstraint*> constraints;
+	p2List<PhysBody3D*> bodies;
+	p2List<btCollisionShape*> shapes;
+	p2List<btDefaultMotionState*> motions;
 
 private:
 
@@ -51,11 +55,6 @@ private:
 	btSequentialImpulseConstraintSolver* solver;
 	btDefaultVehicleRaycaster*			vehicle_raycaster;
 	DebugDrawer*						debug_draw;
-
-	p2List<btCollisionShape*> shapes;
-	p2List<PhysBody3D*> bodies;
-	p2List<btDefaultMotionState*> motions;
-	p2List<btTypedConstraint*> constraints;
 	p2List<PhysBody3D*> buildings;
 };
 

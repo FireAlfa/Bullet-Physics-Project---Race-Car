@@ -28,6 +28,8 @@ public:
 	void CreateBuilding(float x, float y, float z, vec3 size, bool axis, Color color = cBuilding);
 	void CreateTrailer(float x, float y, float z, int id);
 
+	void SetTrailerPos(float x, float y, float z, int id);
+
 	void DefineDeliveryPoints();
 	void CreateDeliverySensor();
 

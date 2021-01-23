@@ -292,64 +292,47 @@ void ModuleSceneIntro::CreateTrailer(float x, float y, float z, int id)
 		trailerInfo.color = cTrailer;
 
 		remolque = App->physics->AddVehicle(trailerInfo);
-		btTransform tr;
-		btQuaternion quat;
+
 		switch (id)
 		{
 		case 0:
-			tr.setIdentity();
-			quat.setRotation(btVector3(0, 1, 0), 80);
-			tr.setRotation(quat);
-			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->cube.transform.rotate(-90, vec3(0, 1, 0));
+			remolque->SetTransform(remolque->cube.transform.M);
 			remolque->SetPos(x - 13, y, z);
 			break;
 		case 1:
-			tr.setIdentity();
-			quat.setRotation(btVector3(0, 1, 0), 110);
-			tr.setRotation(quat);
-			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->cube.transform.rotate(180, vec3(0, 1, 0));
+			remolque->SetTransform(remolque->cube.transform.M);
 			remolque->SetPos(x - 4, y, z - 5);
 			break;
 		case 2:
-			tr.setIdentity();
-			quat.setRotation(btVector3(0, 1, 0), 110);
-			tr.setRotation(quat);
-			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->cube.transform.rotate(180, vec3(0, 1, 0));
+			remolque->SetTransform(remolque->cube.transform.M);
 			remolque->SetPos(x - 4, y, z - 5);
 			break;
 		case 3:
-			tr.setIdentity();
-			quat.setRotation(btVector3(0, 1, 0), 110);
-			tr.setRotation(quat);
-			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->cube.transform.rotate(180, vec3(0, 1, 0));
+			remolque->SetTransform(remolque->cube.transform.M);
 			remolque->SetPos(x - 3, y, z - 5);
 			break;
 		case 4:
-			tr.setIdentity();
-			quat.setRotation(btVector3(0, 1, 0), -80);
-			tr.setRotation(quat);
-			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->cube.transform.rotate(90, vec3(0, 1, 0));
+			remolque->SetTransform(remolque->cube.transform.M);
 			remolque->SetPos(x + 8, y, z + 4);
 			break;
 		case 5:
-			tr.setIdentity();
-			quat.setRotation(btVector3(0, 1, 0), 80);
-			tr.setRotation(quat);
-			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->cube.transform.rotate(-90, vec3(0, 1, 0));
+			remolque->SetTransform(remolque->cube.transform.M);
 			remolque->SetPos(x - 13, y, z + 4);
 			break;
 		case 6:
-			tr.setIdentity();
-			quat.setRotation(btVector3(0, 1, 0), 220);
-			tr.setRotation(quat);
-			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->cube.transform.rotate(0, vec3(0, 1, 0));
+			remolque->SetTransform(remolque->cube.transform.M);
 			remolque->SetPos(x - 4, y, z + 14);
 			break;
 		case 7:
-			tr.setIdentity();
-			quat.setRotation(btVector3(0, 1, 0), -80);
-			tr.setRotation(quat);
-			remolque->GetBody()->setCenterOfMassTransform(tr);
+			remolque->cube.transform.rotate(90, vec3(0, 1, 0));
+			remolque->SetTransform(remolque->cube.transform.M);
 			remolque->SetPos(x + 8, y, z + 4);
 			break;
 		default:
@@ -357,6 +340,59 @@ void ModuleSceneIntro::CreateTrailer(float x, float y, float z, int id)
 		}
 		remolque->collision_listeners.add(this);
 		remolque->GetBody()->setUserPointer(remolque);
+	}
+}
+
+void  ModuleSceneIntro::SetTrailerPos(float x, float y, float z, int id)
+{
+	remolque->GetBody()->setLinearVelocity({ 0,0,0 });
+	remolque->GetBody()->setAngularVelocity({ 0,0,0 });
+	App->player->vehicle->GetBody()->setLinearVelocity({ 0,0,0 });
+	App->player->vehicle->GetBody()->setAngularVelocity({ 0,0,0 });
+	switch (id)
+	{
+	case 0:
+		remolque->cube.transform.rotate(-90, vec3(0, 1, 0));
+		remolque->SetTransform(remolque->cube.transform.M);
+		remolque->SetPos(x - 13, y, z);
+		break;
+	case 1:
+		remolque->cube.transform.rotate(180, vec3(0, 1, 0));
+		remolque->SetTransform(remolque->cube.transform.M);
+		remolque->SetPos(x - 4, y, z - 5);
+		break;
+	case 2:
+		remolque->cube.transform.rotate(180, vec3(0, 1, 0));
+		remolque->SetTransform(remolque->cube.transform.M);
+		remolque->SetPos(x - 4, y, z - 5);
+		break;
+	case 3:
+		remolque->cube.transform.rotate(180, vec3(0, 1, 0));
+		remolque->SetTransform(remolque->cube.transform.M);
+		remolque->SetPos(x - 3, y, z - 5);
+		break;
+	case 4:
+		remolque->cube.transform.rotate(90, vec3(0, 1, 0));
+		remolque->SetTransform(remolque->cube.transform.M);
+		remolque->SetPos(x + 8, y, z + 4);
+		break;
+	case 5:
+		remolque->cube.transform.rotate(-90, vec3(0, 1, 0));
+		remolque->SetTransform(remolque->cube.transform.M);
+		remolque->SetPos(x - 13, y, z + 4);
+		break;
+	case 6:
+		remolque->cube.transform.rotate(0, vec3(0, 1, 0));
+		remolque->SetTransform(remolque->cube.transform.M);
+		remolque->SetPos(x - 4, y, z + 14);
+		break;
+	case 7:
+		remolque->cube.transform.rotate(90, vec3(0, 1, 0));
+		remolque->SetTransform(remolque->cube.transform.M);
+		remolque->SetPos(x + 8, y, z + 4);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -424,7 +460,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if ((body1 == remolque && body2 == App->player->vehicle) || (body2 == remolque && body1 == App->player->vehicle) && isJoint == false)
+	if (((body1 == remolque && body2 == App->player->vehicle) || (body2 == remolque && body1 == App->player->vehicle)) && isJoint == false)
 	{
 		App->player->GenerateDeliveryPoint();
 		btTransform frameInA, frameInB;
@@ -437,6 +473,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 		cs->setDbgDrawSize(2.0f);
 		App->physics->world->addConstraint(cs);
+		App->physics->constraints.add(cs);
 		isJoint = true;
 	}
 	PhysBody3D* auxBody;
@@ -447,21 +484,17 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		{
 			if (cs != nullptr)
 			{
-				int id = cs->getUserConstraintId();
-				btTypedConstraint* constraint = remolque->GetBody()->getConstraintRef(id);
-				App->physics->world->removeConstraint(constraint);
-				delete constraint;
+				for (p2List_item<btTypedConstraint*>* item = App->physics->constraints.getFirst(); item; item = item->next)
+				{
+					App->physics->world->removeConstraint(item->data);
+					delete item->data;
+				}
+				App->physics->constraints.clear();
+
+				isJoint = false;
+				App->player->wasDelivered = true;
+				App->player->GenerateCollectPoint();
 				cs = nullptr;
-			}
-			if (remolque != nullptr)
-			{
-				btRigidBody* body = remolque->GetBody();
-				App->physics->vehicles.del(App->physics->vehicles.findNode(remolque));
-				delete body->getMotionState();
-				App->physics->world->removeRigidBody(remolque->GetBody());
-				btCollisionShape* obj = remolque->GetBody()->getCollisionShape();
-				delete obj;
-				remolque = nullptr;
 			}
 		}
 	}
