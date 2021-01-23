@@ -38,7 +38,7 @@ bool ModuleSceneIntro::Start()
 			{
 				posZ = 4 * TILE_SIZE * i;
 				posX = 4 * TILE_SIZE * j;
-				CreateBuilding(2 * TILE_SIZE - (2 * TILE_SIZE / 2) - posX, 6 * TILE_SIZE, -2 * TILE_SIZE + (2 * TILE_SIZE / 2) + posZ, { 2 * TILE_SIZE, 6 * TILE_SIZE, 2 * TILE_SIZE }, true);
+				CreateBuilding(2 * TILE_SIZE - (2 * TILE_SIZE / 2) - posX, 6 * TILE_SIZE, -2 * TILE_SIZE + (2 * TILE_SIZE / 2) + posZ, { 2 * TILE_SIZE, 6 * TILE_SIZE, 2 * TILE_SIZE }, false);
 			}
 		}
 
@@ -46,42 +46,42 @@ bool ModuleSceneIntro::Start()
 		for (int i = 0; i < 4; ++i)
 		{
 			posZ = 4 * TILE_SIZE * i;	
-			CreateBuilding(14 * TILE_SIZE - (3 * TILE_SIZE / 2), 3 * TILE_SIZE, -2 * TILE_SIZE + (2 * TILE_SIZE / 2) + posZ, { 3 * TILE_SIZE, 3 * TILE_SIZE, 2 * TILE_SIZE }, true);
+			CreateBuilding(14 * TILE_SIZE - (3 * TILE_SIZE / 2), 3 * TILE_SIZE, -2 * TILE_SIZE + (2 * TILE_SIZE / 2) + posZ, { 3 * TILE_SIZE, 3 * TILE_SIZE, 2 * TILE_SIZE }, false);
 		}
 
 		// City hall
-		CreateBuilding(7 * TILE_SIZE - (TILE_SIZE / 2), TILE_SIZE , 9 * TILE_SIZE + (TILE_SIZE / 2), { TILE_SIZE, TILE_SIZE, TILE_SIZE }, true);
-		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 2 * TILE_SIZE, 10 * TILE_SIZE + (2 * TILE_SIZE / 2), { 5 * TILE_SIZE, 2 * TILE_SIZE, 2 * TILE_SIZE }, true);
-		CreateBuilding(8 * TILE_SIZE - (3 * TILE_SIZE / 2), 1.5f * TILE_SIZE, 12 * TILE_SIZE + (TILE_SIZE / 2), { 3 * TILE_SIZE, 1.5f * TILE_SIZE, TILE_SIZE }, true);
+		CreateBuilding(7 * TILE_SIZE - (TILE_SIZE / 2), TILE_SIZE , 9 * TILE_SIZE + (TILE_SIZE / 2), { TILE_SIZE, TILE_SIZE, TILE_SIZE }, false);
+		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 2 * TILE_SIZE, 10 * TILE_SIZE + (2 * TILE_SIZE / 2), { 5 * TILE_SIZE, 2 * TILE_SIZE, 2 * TILE_SIZE }, false);
+		CreateBuilding(8 * TILE_SIZE - (3 * TILE_SIZE / 2), 1.5f * TILE_SIZE, 12 * TILE_SIZE + (TILE_SIZE / 2), { 3 * TILE_SIZE, 1.5f * TILE_SIZE, TILE_SIZE }, false);
 		
 		// City hall front building
-		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 2.5f * TILE_SIZE, -2 * TILE_SIZE + (2 * TILE_SIZE / 2), { 5 * TILE_SIZE, 2.5 * TILE_SIZE , 2 * TILE_SIZE }, true);
+		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 2.5f * TILE_SIZE, -2 * TILE_SIZE + (2 * TILE_SIZE / 2), { 5 * TILE_SIZE, 2.5 * TILE_SIZE , 2 * TILE_SIZE }, false);
 		
 		// Right column
 		for (int i = 0; i < 8; ++i)
 		{
 			posZ = 3 * TILE_SIZE * i;
-			CreateBuilding(-16 * TILE_SIZE - TILE_SIZE, 2 * TILE_SIZE / 2.0f, -7 * TILE_SIZE + (2 * TILE_SIZE / 2) + posZ, {TILE_SIZE, 2 * TILE_SIZE / 2, 2 * TILE_SIZE }, true);
+			CreateBuilding(-16 * TILE_SIZE - TILE_SIZE, 2 * TILE_SIZE / 2.0f, -7 * TILE_SIZE + (2 * TILE_SIZE / 2) + posZ, {TILE_SIZE, 2 * TILE_SIZE / 2, 2 * TILE_SIZE }, false);
 		}
 
 		// Centre back row
-		CreateBuilding(14 * TILE_SIZE - (3 * TILE_SIZE / 2), 4 * TILE_SIZE, -8 * TILE_SIZE + (4 * TILE_SIZE / 2), { 3 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE }, true);
-		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 1.5f * TILE_SIZE, -8 * TILE_SIZE + (4 * TILE_SIZE / 2), { 5 * TILE_SIZE, 1.5f * TILE_SIZE, 4 * TILE_SIZE }, true);
+		CreateBuilding(14 * TILE_SIZE - (3 * TILE_SIZE / 2), 4 * TILE_SIZE, -8 * TILE_SIZE + (4 * TILE_SIZE / 2), { 3 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE }, false);
+		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 1.5f * TILE_SIZE, -8 * TILE_SIZE + (4 * TILE_SIZE / 2), { 5 * TILE_SIZE, 1.5f * TILE_SIZE, 4 * TILE_SIZE }, false);
 		for (int i = 0; i < 2; ++i)
 		{
 			posX = 4 * TILE_SIZE * i;
-			CreateBuilding(2 * TILE_SIZE - (2 * TILE_SIZE / 2) - posX, 4 * TILE_SIZE, -8 * TILE_SIZE + (4 * TILE_SIZE / 2), { 2 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE }, true);
+			CreateBuilding(2 * TILE_SIZE - (2 * TILE_SIZE / 2) - posX, 4 * TILE_SIZE, -8 * TILE_SIZE + (4 * TILE_SIZE / 2), { 2 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE }, false);
 		}
 
 		// Back row
-		CreateBuilding(14 * TILE_SIZE - (4 * TILE_SIZE / 2), 3.5f * TILE_SIZE, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 4 * TILE_SIZE, 3.5f * TILE_SIZE, 3 * TILE_SIZE }, true);
+		CreateBuilding(14 * TILE_SIZE - (4 * TILE_SIZE / 2), 3.5f * TILE_SIZE, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 4 * TILE_SIZE, 3.5f * TILE_SIZE, 3 * TILE_SIZE }, false);
 		for (int i = 0; i < 3; ++i)
 		{
 			posX = 5 * TILE_SIZE * i;
-			CreateBuilding(9 * TILE_SIZE - (3 * TILE_SIZE / 2) - posX, 2.8f * TILE_SIZE, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 3 * TILE_SIZE, 2.8f * TILE_SIZE, 3 * TILE_SIZE }, true);
+			CreateBuilding(9 * TILE_SIZE - (3 * TILE_SIZE / 2) - posX, 2.8f * TILE_SIZE, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 3 * TILE_SIZE, 2.8f * TILE_SIZE, 3 * TILE_SIZE }, false);
 		}
-		CreateBuilding(-6 * TILE_SIZE - (3 * TILE_SIZE / 2), 4 * TILE_SIZE, -13 * TILE_SIZE + (4 * TILE_SIZE / 2), { 3 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE }, true);
-		CreateBuilding(-10 * TILE_SIZE - (2 * TILE_SIZE / 2), 2.5f * TILE_SIZE, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 2 * TILE_SIZE, 2.5f * TILE_SIZE, 3 * TILE_SIZE }, true);
+		CreateBuilding(-6 * TILE_SIZE - (3 * TILE_SIZE / 2), 4 * TILE_SIZE, -13 * TILE_SIZE + (4 * TILE_SIZE / 2), { 3 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE }, false);
+		CreateBuilding(-10 * TILE_SIZE - (2 * TILE_SIZE / 2), 2.5f * TILE_SIZE, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 2 * TILE_SIZE, 2.5f * TILE_SIZE, 3 * TILE_SIZE }, false);
 	}
 
 
@@ -89,8 +89,8 @@ bool ModuleSceneIntro::Start()
 	// Create parks
 	//
 	{
-		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 0.2f, TILE_SIZE + (7 * TILE_SIZE / 2), { 5 * TILE_SIZE, 0.2f, 7 * TILE_SIZE }, true, Green);
-		CreateBuilding(-6 * TILE_SIZE - (7 * TILE_SIZE / 2), 0.2f, -7 * TILE_SIZE + (4 * TILE_SIZE / 2), { 7 * TILE_SIZE, 0.2f, 4 * TILE_SIZE }, true, Green);
+		CreateBuilding(9 * TILE_SIZE - (5 * TILE_SIZE / 2), 0.2f, TILE_SIZE + (7 * TILE_SIZE / 2), { 5 * TILE_SIZE, 0.2f, 7 * TILE_SIZE }, false, cGrass);
+		CreateBuilding(-6 * TILE_SIZE - (7 * TILE_SIZE / 2), 0.2f, -7 * TILE_SIZE + (4 * TILE_SIZE / 2), { 7 * TILE_SIZE, 0.2f, 4 * TILE_SIZE }, false, cGrass);
 
 		// Park 1
 		tree.color = cTree;
@@ -98,42 +98,36 @@ bool ModuleSceneIntro::Start()
 		tree.SetRotation(90, vec3(0, 0, 1));
 		tree.radius = 0.5;
 		tree.height = 5;
-		tree.axis = true;
 		App->physics->AddBody(tree, 10000);
 
 		leaf.color = cLeaf;
 		leaf.SetPos(8 * TILE_SIZE + TILE_SIZE / 2, 6.0f, 7 * TILE_SIZE + TILE_SIZE / 2);
 		leaf.SetRotation(90, vec3(0, 0, 1));
 		leaf.radius = 3;
-		leaf.axis = true;
 
 		tree1.color = cTree;
 		tree1.SetPos(4 * TILE_SIZE + TILE_SIZE / 2, 2.7f, 3 * TILE_SIZE + TILE_SIZE / 2);
 		tree1.SetRotation(90, vec3(0, 0, 1));
 		tree1.radius = 0.5;
 		tree1.height = 5;
-		tree1.axis = true;
 		App->physics->AddBody(tree1, 10000);
 
 		leaf1.color = cLeaf;
 		leaf1.SetPos(4 * TILE_SIZE + TILE_SIZE / 2, 6.0f, 3 * TILE_SIZE + TILE_SIZE / 2);
 		leaf1.SetRotation(90, vec3(0, 0, 1));
 		leaf1.radius = 3;
-		leaf1.axis = true;
 
 		tree2.color = cTree;
 		tree2.SetPos(8 * TILE_SIZE + TILE_SIZE / 2, 2.7f, 2 * TILE_SIZE + TILE_SIZE / 2);
 		tree2.SetRotation(90, vec3(0, 0, 1));
 		tree2.radius = 0.5;
 		tree2.height = 5;
-		tree2.axis = true;
 		App->physics->AddBody(tree1, 10000);
 
 		leaf2.color = cLeaf;
 		leaf2.SetPos(8 * TILE_SIZE + TILE_SIZE / 2, 6.0f, 2 * TILE_SIZE + TILE_SIZE / 2);
 		leaf2.SetRotation(90, vec3(0, 0, 1));
 		leaf2.radius = 3;
-		leaf2.axis = true;
 
 		// Park 2
 
@@ -142,42 +136,36 @@ bool ModuleSceneIntro::Start()
 		tree3.SetRotation(90, vec3(0, 0, 1));
 		tree3.radius = 0.5;
 		tree3.height = 5;
-		tree3.axis = true;
 		App->physics->AddBody(tree3, 10000);
 
 		leaf3.color = cLeaf;
 		leaf3.SetPos(-10 * TILE_SIZE + TILE_SIZE / 2, 6.0f, -5 * TILE_SIZE + TILE_SIZE / 2);
 		leaf3.SetRotation(90, vec3(0, 0, 1));
 		leaf3.radius = 3;
-		leaf3.axis = true;
 
 		tree4.color = cTree;
 		tree4.SetPos(-7 * TILE_SIZE + TILE_SIZE / 2, 2.7f, -6 * TILE_SIZE + TILE_SIZE / 2);
 		tree4.SetRotation(90, vec3(0, 0, 1));
 		tree4.radius = 0.5;
 		tree4.height = 5;
-		tree4.axis = true;
 		App->physics->AddBody(tree4, 10000);
 
 		leaf4.color = cLeaf;
 		leaf4.SetPos(-7 * TILE_SIZE + TILE_SIZE / 2, 6.0f, -6 * TILE_SIZE + TILE_SIZE / 2);
 		leaf4.SetRotation(90, vec3(0, 0, 1));
 		leaf4.radius = 3;
-		leaf4.axis = true;
 
 		tree5.color = cTree;
 		tree5.SetPos(-12 * TILE_SIZE + TILE_SIZE / 2, 2.7f, -7 * TILE_SIZE + TILE_SIZE / 2);
 		tree5.SetRotation(90, vec3(0, 0, 1));
 		tree5.radius = 0.5;
 		tree5.height = 5;
-		tree5.axis = true;
 		App->physics->AddBody(tree5, 10000);
 
 		leaf5.color = cLeaf;
 		leaf5.SetPos(-12 * TILE_SIZE + TILE_SIZE / 2, 6.0f, -7 * TILE_SIZE + TILE_SIZE / 2);
 		leaf5.SetRotation(90, vec3(0, 0, 1));
 		leaf5.radius = 3;
-		leaf5.axis = true;
 	}
 
 
@@ -185,9 +173,9 @@ bool ModuleSceneIntro::Start()
 	// Create roundabouts
 	//
 	{
-		CreateBuilding(0 * TILE_SIZE - (2 * TILE_SIZE / 2), 0.5f, 13 * TILE_SIZE + (2 * TILE_SIZE / 2), { 2 * TILE_SIZE, 0.5f, 2 * TILE_SIZE }, true, cRoundabout);
-		CreateBuilding(-13 * TILE_SIZE - (3 * TILE_SIZE / 2), 0.5f, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 3 * TILE_SIZE, 0.5f, 3 * TILE_SIZE }, true, cRoundabout);
-		CreateBuilding(-14 * TILE_SIZE - (TILE_SIZE / 2), 3.0f, -12 * TILE_SIZE + (TILE_SIZE / 2), { TILE_SIZE / 2, 2.0f, TILE_SIZE / 2 }, true, cStatue);
+		CreateBuilding(0 * TILE_SIZE - (2 * TILE_SIZE / 2), 0.5f, 13 * TILE_SIZE + (2 * TILE_SIZE / 2), { 2 * TILE_SIZE, 0.5f, 2 * TILE_SIZE }, false, cRoundabout);
+		CreateBuilding(-13 * TILE_SIZE - (3 * TILE_SIZE / 2), 0.5f, -13 * TILE_SIZE + (3 * TILE_SIZE / 2), { 3 * TILE_SIZE, 0.5f, 3 * TILE_SIZE }, false, cRoundabout);
+		CreateBuilding(-14 * TILE_SIZE - (TILE_SIZE / 2), 3.0f, -12 * TILE_SIZE + (TILE_SIZE / 2), { TILE_SIZE / 2, 2.0f, TILE_SIZE / 2 }, false, cStatue);
 	}
 
 	return ret;
@@ -196,14 +184,15 @@ bool ModuleSceneIntro::Start()
 void ModuleSceneIntro::DefineDeliveryPoints()
 {
 	//Every city point of deliver and collect defined
-	deliveryPoints.PushBack(btVector3(-7 * TILE_SIZE, 0, 4 * TILE_SIZE));
-	deliveryPoints.PushBack(btVector3(-4*TILE_SIZE, 0, TILE_SIZE*11));
-	deliveryPoints.PushBack(btVector3(4*TILE_SIZE, 0, 11*TILE_SIZE));
-	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE, 0, 1 * TILE_SIZE));
-	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE, 0, TILE_SIZE * 10));
-	deliveryPoints.PushBack(btVector3(-16 * TILE_SIZE, 0, 14 * TILE_SIZE));
-	deliveryPoints.PushBack(btVector3(1 * TILE_SIZE, 0, -10 * TILE_SIZE));
 	deliveryPoints.PushBack(btVector3(-9 * TILE_SIZE, 0, TILE_SIZE * -10));
+	deliveryPoints.PushBack(btVector3(-7 * TILE_SIZE - 4, 0, 4 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(-4 * TILE_SIZE, 0, TILE_SIZE * 11 + 4));
+	deliveryPoints.PushBack(btVector3(-16 * TILE_SIZE + 4, 0, 14 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(4 * TILE_SIZE, 0, 11 * TILE_SIZE + 5));
+	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE, 0, 1 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(1 * TILE_SIZE, 0, -10 * TILE_SIZE));
+	deliveryPoints.PushBack(btVector3(13 * TILE_SIZE + 10, 0, TILE_SIZE * 10 -7));
+
 
 }
 
@@ -215,7 +204,6 @@ void ModuleSceneIntro::CreateDeliverySensor()
 		cubeSensor.color = Blue;
 		cubeSensor.SetPos(deliveryPoints[i].getX() - 3.5, deliveryPoints[i].getY() + 2.5, deliveryPoints[i].getZ() + 3.5);
 		cubeSensor.size = vec3(7, 5, 7);
-		cubeSensor.axis = true;
 
 		deliverySensor.PushBack(App->physics->AddBuilding(cubeSensor, 10000));
 		deliverySensor[i]->collision_listeners.add(this);
@@ -302,6 +290,8 @@ void ModuleSceneIntro::CreateTrailer(float x, float y, float z)
 		trailerInfo.wheels[3].brake = false;
 		trailerInfo.wheels[3].steering = false;
 
+		trailerInfo.color = cTrailer;
+
 		remolque = App->physics->AddVehicle(trailerInfo);
 		remolque->SetPos(x, y, z);
 		remolque->collision_listeners.add(this);
@@ -322,7 +312,6 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	// Draw the world floor
 	Plane p(0, 1, 0, 0);
-	p.axis = true;
 	p.color = cFloor;
 	p.Render();
 

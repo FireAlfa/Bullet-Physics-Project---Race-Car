@@ -116,6 +116,8 @@ bool ModulePlayer::Start()
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
 
+	car.color = cTruck;
+
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0.0f - 2.0f, 1.5f, 14.0f);
 	vehicle->collision_listeners.add(this);

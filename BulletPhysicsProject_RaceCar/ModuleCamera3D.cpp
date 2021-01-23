@@ -118,7 +118,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 		Position.x += newPos.x;
 		Position.z += newPos.z;
-		Position.y = 500;
+		Position.y = 300;
 
 		Reference.x += newPos.x;
 		Reference.z += newPos.z;

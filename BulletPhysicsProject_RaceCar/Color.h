@@ -35,4 +35,8 @@ extern Color cFloor;
 extern Color cTree;
 extern Color cRoundabout;
 extern Color cStatue;
+extern Color cTruck;
+extern Color cWheel;
+extern Color cTrailer;
+extern Color cGrass;
 extern Color cLeaf;
