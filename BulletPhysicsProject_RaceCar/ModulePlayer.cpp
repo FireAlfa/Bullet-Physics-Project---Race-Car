@@ -255,8 +255,8 @@ update_status ModulePlayer::Update(float dt)
 			}
 			else
 			{
-				App->audio->PauseFx(1);
-				App->audio->PlayFx(0, engineOffFx);
+				App->audio->PauseFx(0);
+				App->audio->PlayFx(1, engineOffFx);
 				Mix_PauseMusic();
 				engine = false;
 			}
@@ -384,6 +384,7 @@ void ModulePlayer::GenerateCollectPoint()
 
 void ModulePlayer::SetInitPos()
 {
+	gearState = PARKING;
 	vehicle->GetBody()->setLinearVelocity({ 0,0,0 });
 	vehicle->GetBody()->setAngularVelocity({ 0,0,0 });
 	vehicle->SetTransform((0, 0, 0, 0));
