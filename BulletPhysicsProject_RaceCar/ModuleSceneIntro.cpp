@@ -471,6 +471,8 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 		cs = new btGeneric6DofConstraint(*App->player->vehicle->GetBody(), *remolque->GetBody(), frameInA, frameInB, false);
 
+		App->audio->PlayFx(1, App->player->lockFx, 0);
+
 		cs->setDbgDrawSize(2.0f);
 		App->physics->world->addConstraint(cs);
 		App->physics->constraints.add(cs);
