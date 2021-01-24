@@ -73,7 +73,7 @@ bool Application::Init()
 		item = item->next;
 	}
 
-	frameRateCap = 60;
+	frameRateCap = 30;
 	screenTicksCap = 1000 / frameRateCap;
 
 
@@ -139,14 +139,21 @@ update_status Application::Update()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
+	secondsSinceStartup = startupTime.ReadSec();
 	fpsPreUpdate = SDL_GetTicks();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-	float fpsPostUpdate = SDL_GetTicks() - fpsPreUpdate;
+	uint32 lastFrameMs = 0;
+	uint32 framesOnLastUpdate = 0;
+
+	frameCount++;
+	float averageFps = frameCount / secondsSinceStartup;
+
 	fpsCounter++;
+	float fpsPostUpdate = SDL_GetTicks() - fpsPreUpdate;
 
 	if (fpsMSeconds < SDL_GetTicks() - 1000)
 	{

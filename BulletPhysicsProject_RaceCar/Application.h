@@ -28,14 +28,18 @@ public:
 
 private:
 
-	PerfTimer	pTimer;
+	PerfTimer pTimer;
+	uint64 frameCount = 0;
+	Timer startupTime;
 	Timer dtTimer;
+	float dt = 0.0f;
+	float secondsSinceStartup;
+	float fpsMSeconds;
+	float fpsCounter;
+	float fpsPreUpdate;
 	float frameRateCap;
 	float screenTicksCap;
-	float fpsCounter = 0;
-	float fpsPreUpdate;
-	float fpsMSeconds;
-	float dt = 0.0f;
+
 	p2List<Module*> list_modules;
 
 public:
