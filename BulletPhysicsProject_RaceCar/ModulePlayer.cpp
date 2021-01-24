@@ -27,8 +27,6 @@ bool ModulePlayer::Start()
 	engineOnFx = App->audio->LoadFx("Assets/FX/truck_on.wav");
 	engineOffFx = App->audio->LoadFx("Assets/FX/truck_off.wav");
 	engineAccelerationFx = App->audio->LoadFx("Assets/FX/truck_acceleration.wav");
-	engineMaxSpeedFx = App->audio->LoadFx("Assets/FX/truck_max_speed.wav");
-	engineStopFx = App->audio->LoadFx("Assets/FX/truck_stop.wav");
 	lockFx = App->audio->LoadFx("Assets/FX/truck_lock.wav");
 	deliveryFx = App->audio->LoadFx("Assets/FX/delivery.wav");
 	reverseFx = App->audio->LoadFx("Assets/FX/truck_reverse.wav");
@@ -200,7 +198,6 @@ update_status ModulePlayer::Update(float dt)
 				}
 				if (isDesaccel != true && vehicle->GetKmh() > 5)
 				{
-					App->audio->PlayFx(3, engineStopFx, -1);
 					isDesaccel = true;
 				}
 			}

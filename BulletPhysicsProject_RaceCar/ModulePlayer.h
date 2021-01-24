@@ -58,8 +58,6 @@ public:
 	uint engineOnFx;
 	uint engineOffFx;
 	uint engineAccelerationFx;
-	uint engineMaxSpeedFx;
-	uint engineStopFx;
 	uint lockFx;
 	uint deliveryFx;
 	uint reverseFx;

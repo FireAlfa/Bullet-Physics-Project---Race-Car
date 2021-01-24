@@ -492,6 +492,8 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 					delete item->data;
 				}
 				App->physics->constraints.clear();
+				
+				App->audio->PlayFx(1, App->player->deliveryFx, 0);
 
 				isJoint = false;
 				App->player->wasDelivered = true;
