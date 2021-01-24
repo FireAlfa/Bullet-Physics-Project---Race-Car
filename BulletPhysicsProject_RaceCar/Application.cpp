@@ -73,7 +73,7 @@ bool Application::Init()
 		item = item->next;
 	}
 
-	frameRateCap = 30;
+	frameRateCap = 50;
 	screenTicksCap = 1000 / frameRateCap;
 
 
@@ -152,7 +152,7 @@ void Application::FinishUpdate()
 	frameCount++;
 	float averageFps = frameCount / secondsSinceStartup;
 
-	fpsCounter++;
+	++fpsCounter;
 	float fpsPostUpdate = SDL_GetTicks() - fpsPreUpdate;
 
 	if (fpsMSeconds < SDL_GetTicks() - 1000)

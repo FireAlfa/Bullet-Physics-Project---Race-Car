@@ -302,19 +302,19 @@ update_status ModulePlayer::Update(float dt)
 		switch (gearState)
 		{
 		case ModulePlayer::PARKING:
-			sprintf_s(title, "%.1f Km/h, Gear: Parking, Engine: On | dt: %f, FPS: %.1f", vehicle->GetKmh(), dt, App->fps);
+			sprintf_s(title, "%.1f Km/h, Gear: Parking, Engine: On | dt: %f, FPS: %d", vehicle->GetKmh(), dt, (int)App->fps);
 			break;
 		case ModulePlayer::DRIVE:
-			sprintf_s(title, "%.1f Km/h, Gear: Drive, Engine: On | dt: %f, FPS: %.1f", vehicle->GetKmh(), dt, App->fps);
+			sprintf_s(title, "%.1f Km/h, Gear: Drive, Engine: On | dt: %f, FPS: %d", vehicle->GetKmh(), dt, (int)App->fps);
 			break;
 		case ModulePlayer::REVERSE:
-			sprintf_s(title, "%.1f Km/h, Gear: Reverse, Engine: On | dt: %f, FPS: %.1f", vehicle->GetKmh(), dt, App->fps);
+			sprintf_s(title, "%.1f Km/h, Gear: Reverse, Engine: On | dt: %f, FPS: %d", vehicle->GetKmh(), dt, (int)App->fps);
 			break;
 		default:
 			break;
 		}
 	}
-	else sprintf_s(title, "%.1f Km/h, Gear: None, Engine: Off | dt: %f, FPS: %.1f", vehicle->GetKmh(), dt, App->fps);
+	else sprintf_s(title, "%.1f Km/h, Gear: None, Engine: Off | dt: %f, FPS: %d", vehicle->GetKmh(), dt, (int)App->fps);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
