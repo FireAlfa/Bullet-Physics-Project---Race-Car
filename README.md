@@ -7,6 +7,8 @@ You will have to travel through this town and find the cargo, then deliver it to
 But watch out, don't damage the cargo or you will be fired.
 If you arrive at the delivery point without damaging the truckload your job here will be done, but the SSA allways need new parts and they don't deliver themselves.
 
+This game was made with [Bullet Physics Engine](https://pybullet.org/wordpress/)
+
 ## Key Features
 
   - Truck physics with Bullet Physics
