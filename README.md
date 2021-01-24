@@ -14,19 +14,41 @@ If you arrive at the delivery point without damaging the truckload your job here
   - Automatic transmission shift
   - Amazing city to drive through
   - Trailer spawns at pick up places
-  - Truck and trailer constraint when a collision happens
-  - Random delivery point is made
-  - Lose condition if the trailer collides with any building
+  - Truck picks up trailer
+  - Random delivery point is generated
+  - Lose condition if the trailer collides with anything
   - Win condition if the truck collides with the delivery point without damaging the load
   - Infinite game loop
   - Audio feedback
   - Great music
+  - Debug mode
+  - Free cam in debug mode
+  - Minimap 
   
 ## Controls
 
   - W -> Accelerate
   - S -> Brake
-  - A -> Turn right
-  - D -> Turn left
+  - A -> Turn left
+  - D -> Turn right
   - E -> Turn on/off the engine
-  - C -> Change gears (N
+  - C -> Change gears (Parking/Drive/Reverse)
+  - M -> Activate minimap view
+  - R -> Turn on/off the radio
+ 
+## DEBUG Keys
+
+  - F1             -> Debug mode on/off
+  - Arrow Keys     -> Move camera
+  - Mouse Button 2 -> Spin the camera
+  - T              -> Elevate camera
+  - G              -> Lower camera
+    
+## Developers
+
+  - [Himar Bravo](https://github.com/himar33)
+  - [Òscar Canales](https://github.com/Osvak)
+  - [Carles Garriga](https://github.com/FireAlfa)
+    
+## [License](https://github.com/FireAlfa/BulletPhysicsProject_RaceCar/blob/main/LICENSE)
+
