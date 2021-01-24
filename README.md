@@ -51,6 +51,11 @@ This game was made with [Bullet Physics Engine](https://pybullet.org/wordpress/)
   - [Himar Bravo](https://github.com/himar33)
   - [Òscar Canales](https://github.com/Osvak)
   - [Carles Garriga](https://github.com/FireAlfa)
+  
+## Github
+
+For more information and access to the source code visit our Github repository here:
+https://github.com/FireAlfa/BulletPhysicsProject_RaceCar
     
 ## [License](https://github.com/FireAlfa/BulletPhysicsProject_RaceCar/blob/main/LICENSE)
 
