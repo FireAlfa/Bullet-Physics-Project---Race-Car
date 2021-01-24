@@ -149,7 +149,7 @@ update_status ModulePlayer::Update(float dt)
 	if (map == false)
 	{
 		turn = acceleration = 0;
-		brake = 2.5f;
+		brake = 50.0f;
 		if (engine == true)
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
@@ -289,9 +289,9 @@ update_status ModulePlayer::Update(float dt)
 			}
 		}
 
-		vehicle->ApplyEngineForce(acceleration * dt * 35);
+		vehicle->ApplyEngineForce(acceleration * dt);
 		vehicle->Turn(turn);
-		vehicle->Brake(brake * dt * 35);
+		vehicle->Brake(brake * dt);
 	}
 
 	vehicle->Render();
@@ -302,19 +302,19 @@ update_status ModulePlayer::Update(float dt)
 		switch (gearState)
 		{
 		case ModulePlayer::PARKING:
-			sprintf_s(title, "%.1f Km/h, Gear: Parking, Engine: On", vehicle->GetKmh());
+			sprintf_s(title, "%.1f Km/h, Gear: Parking, Engine: On | dt: %f, FPS: %.1f", vehicle->GetKmh(), dt, App->fps);
 			break;
 		case ModulePlayer::DRIVE:
-			sprintf_s(title, "%.1f Km/h, Gear: Drive, Engine: On", vehicle->GetKmh());
+			sprintf_s(title, "%.1f Km/h, Gear: Drive, Engine: On | dt: %f, FPS: %.1f", vehicle->GetKmh(), dt, App->fps);
 			break;
 		case ModulePlayer::REVERSE:
-			sprintf_s(title, "%.1f Km/h, Gear: Reverse, Engine: On", vehicle->GetKmh());
+			sprintf_s(title, "%.1f Km/h, Gear: Reverse, Engine: On | dt: %f, FPS: %.1f", vehicle->GetKmh(), dt, App->fps);
 			break;
 		default:
 			break;
 		}
 	}
-	else sprintf_s(title, "%.1f Km/h, Gear: None, Engine: Off", vehicle->GetKmh(), gearState);
+	else sprintf_s(title, "%.1f Km/h, Gear: None, Engine: Off | dt: %f, FPS: %.1f", vehicle->GetKmh(), dt, App->fps);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;

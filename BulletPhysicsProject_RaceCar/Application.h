@@ -3,6 +3,7 @@
 #include "p2List.h"
 #include "Globals.h"
 #include "Timer.h"
+#include "PerfTimer.h"
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
@@ -27,12 +28,19 @@ public:
 
 private:
 
-	Timer	ms_timer;
-	float	dt;
+	PerfTimer	pTimer;
+	Timer dtTimer;
+	float frameRateCap;
+	float screenTicksCap;
+	float fpsCounter = 0;
+	float fpsPreUpdate;
+	float fpsMSeconds;
+	float dt = 0.0f;
 	p2List<Module*> list_modules;
 
 public:
 
+	float fps = 0.0f;
 	bool debug = false;
 
 public:

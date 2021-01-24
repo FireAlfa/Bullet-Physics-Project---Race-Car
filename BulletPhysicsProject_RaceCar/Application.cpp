@@ -2,6 +2,8 @@
 
 Application::Application()
 {
+	PERF_START(pTimer);
+
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);
@@ -33,6 +35,9 @@ Application::Application()
 
 
 	bool debug = false;
+
+
+	PERF_PEEK(pTimer);
 }
 
 Application::~Application()
@@ -44,10 +49,19 @@ Application::~Application()
 		delete item->data;
 		item = item->prev;
 	}
+
+	list_modules.clear();
+}
+
+void Application::AddModule(Module* mod)
+{
+	list_modules.add(mod);
 }
 
 bool Application::Init()
 {
+	PERF_START(pTimer);
+
 	bool ret = true;
 
 	// Call Init() in all modules
@@ -59,41 +73,43 @@ bool Application::Init()
 		item = item->next;
 	}
 
+	frameRateCap = 60;
+	screenTicksCap = 1000 / frameRateCap;
+
+
+	PERF_PEEK(pTimer);
+
+
 	// After all Init calls we call Start() in all modules
 	LOG("Application Start --------------");
 	item = list_modules.getFirst();
+
+	fpsMSeconds = SDL_GetTicks();
 
 	while(item != NULL && ret == true)
 	{
 		ret = item->data->Start();
 		item = item->next;
 	}
+
 	
-	ms_timer.Start();
+
 	return ret;
 }
 
-// ---------------------------------------------
-void Application::PrepareUpdate()
-{
-	dt = (float)ms_timer.Read() / 1000.0f;
-	ms_timer.Start();
-}
-
-// ---------------------------------------------
-void Application::FinishUpdate()
-{
-}
 
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
-	
+
 	p2List_item<Module*>* item = list_modules.getFirst();
-	
-	while(item != NULL && ret == UPDATE_CONTINUE)
+
+	dt = dtTimer.ReadSec();
+	dtTimer.Start();
+
+	while (item != NULL && ret == UPDATE_CONTINUE)
 	{
 		ret = item->data->PreUpdate(dt);
 		item = item->next;
@@ -101,7 +117,7 @@ update_status Application::Update()
 
 	item = list_modules.getFirst();
 
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	while (item != NULL && ret == UPDATE_CONTINUE)
 	{
 		ret = item->data->Update(dt);
 		item = item->next;
@@ -109,7 +125,7 @@ update_status Application::Update()
 
 	item = list_modules.getFirst();
 
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	while (item != NULL && ret == UPDATE_CONTINUE)
 	{
 		ret = item->data->PostUpdate(dt);
 		item = item->next;
@@ -118,6 +134,35 @@ update_status Application::Update()
 	FinishUpdate();
 	return ret;
 }
+
+
+// ---------------------------------------------
+void Application::PrepareUpdate()
+{
+	fpsPreUpdate = SDL_GetTicks();
+}
+
+// ---------------------------------------------
+void Application::FinishUpdate()
+{
+	float fpsPostUpdate = SDL_GetTicks() - fpsPreUpdate;
+	fpsCounter++;
+
+	if (fpsMSeconds < SDL_GetTicks() - 1000)
+	{
+		fpsMSeconds = SDL_GetTicks();
+		fps = fpsCounter;
+		fpsCounter = 0;
+	}
+
+	if (fpsPostUpdate < screenTicksCap)
+	{
+		SDL_Delay(screenTicksCap - fpsPostUpdate);
+	}
+
+}
+
+
 
 bool Application::CleanUp()
 {
@@ -130,9 +175,4 @@ bool Application::CleanUp()
 		item = item->prev;
 	}
 	return ret;
-}
-
-void Application::AddModule(Module* mod)
-{
-	list_modules.add(mod);
 }
