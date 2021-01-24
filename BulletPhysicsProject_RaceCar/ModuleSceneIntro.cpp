@@ -98,7 +98,7 @@ bool ModuleSceneIntro::Start()
 		tree.SetRotation(90, vec3(0, 0, 1));
 		tree.radius = 0.5;
 		tree.height = 5;
-		App->physics->AddBody(tree, 10000);
+		App->physics->AddBody(tree, 100000);
 
 		leaf.color = cLeaf;
 		leaf.SetPos(8 * TILE_SIZE + TILE_SIZE / 2, 6.0f, 7 * TILE_SIZE + TILE_SIZE / 2);
@@ -110,7 +110,7 @@ bool ModuleSceneIntro::Start()
 		tree1.SetRotation(90, vec3(0, 0, 1));
 		tree1.radius = 0.5;
 		tree1.height = 5;
-		App->physics->AddBody(tree1, 10000);
+		App->physics->AddBody(tree1, 100000);
 
 		leaf1.color = cLeaf;
 		leaf1.SetPos(4 * TILE_SIZE + TILE_SIZE / 2, 6.0f, 3 * TILE_SIZE + TILE_SIZE / 2);
@@ -122,7 +122,7 @@ bool ModuleSceneIntro::Start()
 		tree2.SetRotation(90, vec3(0, 0, 1));
 		tree2.radius = 0.5;
 		tree2.height = 5;
-		App->physics->AddBody(tree1, 10000);
+		App->physics->AddBody(tree2, 100000);
 
 		leaf2.color = cLeaf;
 		leaf2.SetPos(8 * TILE_SIZE + TILE_SIZE / 2, 6.0f, 2 * TILE_SIZE + TILE_SIZE / 2);
@@ -136,7 +136,7 @@ bool ModuleSceneIntro::Start()
 		tree3.SetRotation(90, vec3(0, 0, 1));
 		tree3.radius = 0.5;
 		tree3.height = 5;
-		App->physics->AddBody(tree3, 10000);
+		App->physics->AddBody(tree3, 100000);
 
 		leaf3.color = cLeaf;
 		leaf3.SetPos(-10 * TILE_SIZE + TILE_SIZE / 2, 6.0f, -5 * TILE_SIZE + TILE_SIZE / 2);
@@ -148,7 +148,7 @@ bool ModuleSceneIntro::Start()
 		tree4.SetRotation(90, vec3(0, 0, 1));
 		tree4.radius = 0.5;
 		tree4.height = 5;
-		App->physics->AddBody(tree4, 10000);
+		App->physics->AddBody(tree4, 100000);
 
 		leaf4.color = cLeaf;
 		leaf4.SetPos(-7 * TILE_SIZE + TILE_SIZE / 2, 6.0f, -6 * TILE_SIZE + TILE_SIZE / 2);
@@ -160,7 +160,7 @@ bool ModuleSceneIntro::Start()
 		tree5.SetRotation(90, vec3(0, 0, 1));
 		tree5.radius = 0.5;
 		tree5.height = 5;
-		App->physics->AddBody(tree5, 10000);
+		App->physics->AddBody(tree5, 100000);
 
 		leaf5.color = cLeaf;
 		leaf5.SetPos(-12 * TILE_SIZE + TILE_SIZE / 2, 6.0f, -7 * TILE_SIZE + TILE_SIZE / 2);
@@ -203,7 +203,7 @@ void ModuleSceneIntro::CreateDeliverySensor()
 		cubeSensor.SetPos(deliveryPoints[i].getX() - 3.5, deliveryPoints[i].getY() + 2.5, deliveryPoints[i].getZ() + 3.5);
 		cubeSensor.size = vec3(7, 5, 7);
 
-		deliverySensor.PushBack(App->physics->AddBuilding(cubeSensor, 10000));
+		deliverySensor.PushBack(App->physics->AddBuilding(cubeSensor, 100000));
 		PhysBody3D* auxBody = *deliverySensor.At(i);
 		auxBody->collision_listeners.add(this);
 		auxBody->GetBody()->setUserPointer(auxBody);
@@ -515,7 +515,7 @@ void ModuleSceneIntro::CreateBuilding(float x, float y, float z, vec3 size, bool
 	cube.axis = axis;
 	buildings.add(cube);
 
-	App->physics->AddBuilding(cube, 10000);
+	App->physics->AddBuilding(cube, 100000);
 }
 
 void ModuleSceneIntro::LooseCondition()
